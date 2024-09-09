@@ -114,7 +114,7 @@ function Controls()
         camera.direction = 'left'
         camera.pos.x = camera.pos.x - camera.speed
     end
-    
+
     if love.keyboard.isDown('d') then
         camera.direction = 'right'
         camera.pos.x = camera.pos.x + camera.speed
