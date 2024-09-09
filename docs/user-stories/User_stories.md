@@ -7,3 +7,5 @@ Als gebruiker wil ik dat er geen bugs in de game zit zodat ik geen onverwacht ge
 Als gebruiker wil ik een intuitief UI zodat ik weet waar ik aan toe ben en wat ik kan.
 
 Als toeschouwer wil ik dat het er interresant uit ziet zodat het mijn aandacht behoudt.
+
+Als docent wil ik zien dat de studenten hun best hebben gedaan en creatief zijn geweest zodat ik er trots op kan zijn.
