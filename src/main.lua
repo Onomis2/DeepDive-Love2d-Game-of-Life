@@ -1,6 +1,7 @@
 -- Initialise variables
 local cell = {[1] = {[1] = 1}} -- cell[x][y][cellType]
-local screenSize = {['x'] = 800, ['y'] = 600} -- screenSize[axis]
+local width,height = love.window.getDesktopDimensions(flags)
+local screenSize = {['x'] = width, ['y'] = height} -- screenSize[axis]
 local camera = {pos = {['x'] = 0, ['y'] = 0}, speed = 25} -- camera[property][axis/value][value]
 local cellSize = 50
 
