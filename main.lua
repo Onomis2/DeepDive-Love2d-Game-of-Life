@@ -33,3 +33,9 @@ function love.draw()
     love.graphics.print("Mouse X: " .. mouseX, 10, 10)
     love.graphics.print("Mouse Y: " .. mouseY, 10, 30)
 end
+
+function love.keypressed(key)
+    if key == "f" then
+        love.event.quit()
+    end
+end
