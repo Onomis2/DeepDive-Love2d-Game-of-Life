@@ -29,4 +29,7 @@ function love.draw()
     love.graphics.print("hide UI", widthUI, height)
     love.graphics.draw(resetImage, widthReset, height, 0, 0.4, 0.4)
     love.graphics.draw(button, width, height, 0, 0.4, 0.4)
+    local mouseX, mouseY = love.mouse.getPosition()
+    love.graphics.print("Mouse X: " .. mouseX, 10, 10)
+    love.graphics.print("Mouse Y: " .. mouseY, 10, 30)
 end
