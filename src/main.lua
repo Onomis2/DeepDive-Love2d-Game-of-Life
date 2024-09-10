@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 -- Initialise variables
 local cell = {[1] = {[1] = 1}} -- cell[x][y][cellType]
 local width,height = love.window.getDesktopDimensions()
@@ -6,17 +7,19 @@ local camera = {pos = {['x'] = 0, ['y'] = 0}, speed = 25} -- camera[property][ax
 local cellSize = 50
 local paused = true
 
+=======
+local module = require("module")
+>>>>>>> test
 
---Debugging
 local debug = true
-local text = {}
+local isRunning = false
 
--- Love2d Functions
 function love.load()
-
+    module.load()
 end
 
 function love.update(dt)
+<<<<<<< HEAD
     -- Game
     Controls()
     if paused == false then
@@ -46,39 +49,18 @@ function love.update(dt)
     end
 
 
+=======
+    module.Camera()
+    module.update(dt, isRunning)
+>>>>>>> test
 end
 
 function love.draw()
-
-    -- Required
-    for y, row in pairs(cell) do
-        for x, value in pairs(row) do
-            DrawTile(x, y)
-        end
-    end
-
-    -- 
-    love.graphics.setColor(0.1, 0.1, 0.1)
-    local gridSize = cellSize >= 10 and cellSize or cellSize * 10
-    for i = 0, screenSize.x / gridSize do
-        local lineX = (i * gridSize) - camera.pos.x % gridSize + (screenSize.x / 2) % gridSize
-        love.graphics.line(lineX, 0, lineX, screenSize.y)
-    end
-    for i = 0, screenSize.y / gridSize do
-        local lineY = (i * gridSize) - camera.pos.y % gridSize + (screenSize.y / 2) % gridSize
-        love.graphics.line(0, lineY, screenSize.x, lineY)
-    end
-
-        -- Debugging
-        if debug == true then
-            for a, b in pairs(text) do
-                love.graphics.setColor(1, 0, 0)
-                love.graphics.print(b, 10, a * 10, 0, 1, 1)
-            end
-        end
-
+    module.draw()
+    if debug then module.debug(isRunning) end
 end
 
+<<<<<<< HEAD
 -- Functions
 
 function love.wheelmoved(x, y, cell)
@@ -134,26 +116,26 @@ function Controls()
         camera.pos.x,camera.pos.y = 10800000,10800000
     end
 
+=======
+function love.wheelmoved(x, y)
+    module.wheelmoved(x, y)
+>>>>>>> test
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
+    module.mousepressed(x, y, button, istouch, presses)
+end
 
-    -- Check left mouse press
-    if button == 1 then
-        
-        -- Calculate where to place pixel
-        local cellX = math.floor((x - (screenSize.x / 2) + camera.pos.x) / cellSize)
-        local cellY = math.floor((y - (screenSize.y / 2) + camera.pos.y) / cellSize)
-        
-        -- Initialise cell
-        if not cell[cellY] then
-            cell[cellY] = {}
-        end
-
-        -- Set pixel at location of mouse
-        if not cell[cellY][cellX] then
-            cell[cellY][cellX] = 1
-        end
+function love.keypressed(key)
+    if key == "escape" then
+        love.event.quit()
+    elseif key == "c" then
+        module.clearCells()
+    elseif key == "h" then
+        debug = not debug
+    elseif key == "space" then
+        isRunning = not isRunning
+        module.setRunning(isRunning)
     end
 
 end
