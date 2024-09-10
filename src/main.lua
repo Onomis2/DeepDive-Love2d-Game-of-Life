@@ -1,9 +1,11 @@
 -- Initialise variables
 local cell = {[1] = {[1] = 1}} -- cell[x][y][cellType]
-local width,height = love.window.getDesktopDimensions(flags)
+local width,height = love.window.getDesktopDimensions()
 local screenSize = {['x'] = width, ['y'] = height} -- screenSize[axis]
 local camera = {pos = {['x'] = 0, ['y'] = 0}, speed = 25} -- camera[property][axis/value][value]
 local cellSize = 50
+local paused = true
+
 
 --Debugging
 local debug = true
@@ -17,6 +19,10 @@ end
 function love.update(dt)
     -- Game
     Controls()
+    if paused == false then
+        local newCells = {}
+        cell = UpdateCells(newCells)
+    end
 
     -- Debugging
     if debug == true then
@@ -35,7 +41,10 @@ function love.update(dt)
         else
             text[6] = "Dead"
         end
+
+        text[7] = tostring(paused)
     end
+
 
 end
 
@@ -71,15 +80,6 @@ function love.draw()
 end
 
 -- Functions
-
-function DrawTile(x, y)
-    -- If a tile was found, set color to 1
-    if cell[y][x] == 1 then
-        love.graphics.setColor(1, 1, 1)
-    end
-    -- Fill location of tile with rectangle and resize it accordingly
-    love.graphics.rectangle("fill", (x * cellSize) - camera.pos.x + (screenSize.x / 2), (y * cellSize) - camera.pos.y + (screenSize.y / 2), cellSize, cellSize)
-end
 
 function love.wheelmoved(x, y, cell)
     local oldcellSize = cellSize
@@ -121,6 +121,14 @@ function Controls()
         camera.pos.x = camera.pos.x + camera.speed
     end
 
+    function love.keypressed( key, scancode, isrepeat )
+
+        if scancode == "space" then
+            paused = not paused
+        end
+
+    end
+
     -- Debugging keybinds
     if love.keyboard.isDown('h') and debug == true then
         camera.pos.x,camera.pos.y = 10800000,10800000
@@ -147,4 +155,31 @@ function love.mousepressed(x, y, button, istouch, presses)
             cell[cellY][cellX] = 1
         end
     end
+
+end
+
+function DrawTile(x, y)
+    -- If a tile was found, set color to 1
+    if cell[y][x] == 1 then
+        love.graphics.setColor(1, 1, 1)
+    end
+    -- Fill location of tile with rectangle and resize it accordingly
+    love.graphics.rectangle("fill", (x * cellSize) - camera.pos.x + (screenSize.x / 2), (y * cellSize) - camera.pos.y + (screenSize.y / 2), cellSize, cellSize)
+end
+
+function UpdateCells(newCells)
+
+    for a,b in ipairs(cell) do
+        local population = 0
+        for x = -1,1 do
+            for y = -1,1 do
+                if not x == 0 and y == 0 and cell[x][y] == 1 then
+                    population = population + 1
+                end
+            end
+        end
+        if population == 2 or population == 3 or
+    end
+
+
 end
