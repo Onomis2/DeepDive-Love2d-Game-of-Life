@@ -6,34 +6,49 @@ function love.load()
     playImage = love.graphics.newImage("picture/play.png")
     resetImage = love.graphics.newImage("picture/reset.png")
 
-    gameStarted = false
+    play = false
+    pause = true
 end
 
 function love.update(dt)
-    if gameStarted == false then
-        if love.keyboard.isDown("return") then
-            gameStarted = true
-        end
+    if play == false then
         button = playImage
-    else
-        if love.keyboard.isDown("escape") then
-            gameStarted = false
-        end
+    elseif pause == false then
         button = pauseImage
     end
 end
 
 function love.draw()
+    local mouseX, mouseY = love.mouse.getPosition()
     if width <= 800 and height <= 600 then
         love.graphics.print("hide UI", width - 225, height - 580)
         love.graphics.draw(resetImage, width - 175, height - 580, 0, 0.4, 0.4)
         love.graphics.draw(button, width - 125, height - 580, 0, 0.4, 0.4)
+        if love.mouse.isDown(1) and mouseX >= 675 and mouseX <= 710 and mouseY >= 18 and mouseY <= 51 and play == false then
+            play = true
+            pause = false
+            love.timer.sleep(0.5)
+        elseif love.mouse.isDown(1) and mouseX >= 675 and mouseX <= 710 and mouseY >= 18 and mouseY <= 51 and play == true then
+            play = false
+            pause = true
+            love.timer.sleep(0.5)
+        end
     elseif width >= 801 and height >= 601 then
         love.graphics.print("hide UI", width - 225, height - 820)
         love.graphics.draw(resetImage, width - 175, height - 820, 0, 0.4, 0.4)
         love.graphics.draw(button, width - 125, height - 820, 0, 0.4, 0.4)
+        if love.mouse.isDown(1) and mouseX >= 1410 and mouseX <= 1445 and mouseY >= 42 and mouseY <= 75 and play == false then
+            play = true
+            pause = false
+            love.timer.sleep(0.5)
+        elseif love.mouse.isDown(1) and mouseX >= 1410 and mouseX <= 1445 and mouseY >= 42 and mouseY <= 75 and play == true then
+            play = false
+            pause = true
+            love.timer.sleep(0.5)
+        end
     end
-    local mouseX, mouseY = love.mouse.getPosition()
+    
+    
     love.graphics.print("Mouse X: " .. mouseX, 10, 10)
     love.graphics.print("Mouse Y: " .. mouseY, 10, 30)
 end
