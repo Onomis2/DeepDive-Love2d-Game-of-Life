@@ -8,7 +8,7 @@ local cellSize = 10
 local isPlacing = false
 local isRemoving = false
 local generation = 0
-local isGridVisible = true -- Add this line
+local isGridVisible = true
 
 local place = love.audio.newSource("sfx/place.wav", "static")
 local remove = love.audio.newSource("sfx/remove.wav", "static")
@@ -46,9 +46,12 @@ function module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu)
 end
 
 function module.helpMenu()
-    love.graphics.setColor(0.68, 0.85, 0.90) -- Set color to light blue
-    love.graphics.print("Help Menu", width - 150, height - 180)
-    love.graphics.setColor(1, 1, 1) -- Reset color to white
+    love.graphics.setColor(0.68, 0.85, 0.90)
+    love.graphics.print("Help Menu", width - 150, height - 240)
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print("M1: Exit game", width - 150, height - 220)
+    love.graphics.print("M2: Exit game", width - 150, height - 200)
+    love.graphics.print("ESC: Exit game", width - 150, height - 180)
     love.graphics.print("N: Hide help menu", width - 150, height - 160)
     love.graphics.print("C: Clear all cells", width - 150, height - 140)
     love.graphics.print("H: Hide Debug Menu", width - 150, height - 120)
@@ -60,7 +63,7 @@ function module.helpMenu()
 end
 
 function grid()
-    if not isGridVisible then return end -- Add this line
+    if not isGridVisible then return end
     love.graphics.setColor(0.1, 0.1, 0.1)
     local gridSize = cellSize >= 10 and cellSize or cellSize * 10
     for i = 0, screenSize.x / gridSize do
@@ -200,7 +203,7 @@ function module.mute(state)
     sfx = state
 end
 
-function module.toggleGridVisibility() -- Add this function
+function module.toggleGridVisibility()
     isGridVisible = not isGridVisible
 end
 
