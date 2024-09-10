@@ -19,6 +19,12 @@ function love.update(dt)
     elseif pause == false then
         button = pauseImage
     end
+
+    if UI == false then
+        hide = "hide UI"
+    elseif UI == true then
+        hide = "show UI"
+    end
 end
 
 function love.draw()
@@ -31,7 +37,7 @@ function love.draw()
     end
 
     if width <= 800 and height <= 600 then
-        love.graphics.print("hide UI", width - 225, height - 570)
+        love.graphics.print(hide, width - 225, height - 570)
         love.graphics.draw(resetImage, width - 175, height - 580, 0, 0.4, 0.4)
         love.graphics.draw(button, width - 125, height - 580, 0, 0.4, 0.4)
 
@@ -54,10 +60,15 @@ function love.draw()
             pause = true
             love.timer.sleep(0.25)
         elseif love.mouse.isDown(1) and mouseX >= 574  and mouseX <= 617 and mouseY >= 30 and mouseY <= 40 then --hide UI
+            if UI == false then
+                UI = true
+            elseif UI == true then
+                UI = false
+            end
             love.timer.sleep(0.25)
         end
     elseif width >= 801 and height >= 601 then
-        love.graphics.print("hide UI", width - 225, height - 810)
+        love.graphics.print(hide, width - 225, height - 810)
         love.graphics.draw(resetImage, width - 175, height - 820, 0, 0.4, 0.4)
         love.graphics.draw(button, width - 125, height - 820, 0, 0.4, 0.4)
 
@@ -80,6 +91,11 @@ function love.draw()
             pause = true
             love.timer.sleep(0.25)
         elseif love.mouse.isDown(1) and mouseX >= 1310  and mouseX <= 1353 and mouseY >= 50 and mouseY <= 65 then --hide UI
+            if UI == false then
+                UI = true
+            elseif UI == true then
+                UI = false
+            end
             love.timer.sleep(0.25)
         end
     end
