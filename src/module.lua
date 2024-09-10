@@ -1,28 +1,43 @@
 local module = {}
 
 local cell = {[1] = {[1] = 1}}
-local width, height = love.window.getDesktopDimensions(flags)
+local width, height = love.window.getDesktopDimensions()
 local screenSize = {['x'] = width, ['y'] = height}
 local camera = {pos = {['x'] = 0, ['y'] = 0}, speed = 25}
 local cellSize = 10
 
-local debug = false
-local previousDebug = false
+local isRunning = false
 
 function module.load()
 end
 
-function module.update(dt)
-    module.Controls()
+function module.update(dt, isRunning)
+    -- Update logic based on isRunning
 end
 
-function module.draw()
+function countCells()
+    local count = 0
     for y, row in pairs(cell) do
         for x, value in pairs(row) do
-            module.DrawTile(x, y)
+            if value == 1 then
+                count = count + 1
+            end
         end
     end
+    return count
+end
 
+function module.debug(isRunning)
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print(tostring(love.timer.getFPS()) .. " fps", 10, height - 40)
+    love.graphics.print("V0.0.1", 10, height - 20)
+    love.graphics.print("Camera Speed: " .. camera.speed, 10, height - 60)
+    love.graphics.print("Camera X: " .. camera.pos.x .. ", Camera Y: " .. camera.pos.y, 10, height - 80)
+    love.graphics.print("Population: " .. countCells(), 10, height - 100)
+    love.graphics.print("isRunning: " .. tostring(isRunning), 10, height - 120)
+end
+
+function grid()
     love.graphics.setColor(0.1, 0.1, 0.1)
     local gridSize = cellSize >= 10 and cellSize or cellSize * 10
     for i = 0, screenSize.x / gridSize do
@@ -33,13 +48,16 @@ function module.draw()
         local lineY = (i * gridSize) - camera.pos.y % gridSize + (screenSize.y / 2) % gridSize
         love.graphics.line(0, lineY, screenSize.x, lineY)
     end
+end
 
-    if debug then
-        love.graphics.setColor(1, 1, 1)
-        fps = love.timer.getFPS()
-        love.graphics.print(fps .. " fps", 10, height - 40)
-        love.graphics.print("V0.0.1", 10, height - 20)
+function module.draw()
+    for y, row in pairs(cell) do
+        for x, value in pairs(row) do
+            module.DrawTile(x, y)
+        end
     end
+
+    grid()
 end
 
 function module.DrawTile(x, y)
@@ -49,7 +67,7 @@ function module.DrawTile(x, y)
     love.graphics.rectangle("fill", (x * cellSize) - camera.pos.x + (screenSize.x / 2), (y * cellSize) - camera.pos.y + (screenSize.y / 2), cellSize, cellSize)
 end
 
-function module.wheelmoved(x, y, cell)
+function module.wheelmoved(x, y)
     local oldcellSize = cellSize
 
     if y > 0 and cellSize < 100 then
@@ -71,7 +89,7 @@ function module.clearCells()
     end
 end
 
-function module.Controls()
+function module.Camera()
     if love.keyboard.isDown('w') then
         camera.direction = 'up'
         camera.pos.y = camera.pos.y - camera.speed
@@ -92,19 +110,11 @@ function module.Controls()
         camera.pos.x = camera.pos.x + camera.speed
     end
 
-    if love.keyboard.isDown('escape') then
-        love.event.quit()
+    if love.keyboard.isDown('lshift') then
+        camera.speed = 50
+    else
+        camera.speed = 25
     end
-
-    if love.keyboard.isDown('c') then
-        module.clearCells()
-    end
-
-    local currentDebugState = love.keyboard.isDown('h')
-    if currentDebugState and not previousDebug then
-        debug = not debug
-    end
-    previousDebug = currentDebugState
 end
 
 function module.mousepressed(x, y, button, istouch, presses)
@@ -121,4 +131,9 @@ function module.mousepressed(x, y, button, istouch, presses)
         end
     end
 end
+
+function module.setRunning(state)
+    isRunning = state
+end
+
 return module
