@@ -52,6 +52,34 @@ function love.draw()
         --module.debug(isRunning, sfx) 
      end
 
+        -- Required
+        for y, row in pairs(cell) do
+            for x, value in pairs(row) do
+                DrawTile(x, y)
+            end
+        end
+    
+        love.graphics.setColor(0.1, 0.1, 0.1)
+        local gridSize = cellSize >= 10 and cellSize or cellSize * 10
+        for i = 0, screenSize.x / gridSize do
+            local lineX = (i * gridSize) - camera.pos.x % gridSize + (screenSize.x / 2) % gridSize
+            love.graphics.line(lineX, 0, lineX, screenSize.y)
+        end
+        for i = 0, screenSize.y / gridSize do
+            local lineY = (i * gridSize) - camera.pos.y % gridSize + (screenSize.y / 2) % gridSize
+            love.graphics.line(0, lineY, screenSize.x, lineY)
+        end
+    
+        -- Debugging
+        if debug == true then
+            for a, b in pairs(text) do
+                love.graphics.setColor(1, 1, 1)
+                love.graphics.print(b, 10, a * 10, 0, 1, 1)
+            end
+        end
+    
+    end
+
 -- Functions
 
 function love.wheelmoved(x, y, cell)
