@@ -95,7 +95,7 @@ function module.draw()
 
     grid()
     love.graphics.setColor(1, 1, 1)
-    love.graphics.print("V0.0.1", 10, height - 20)
+    love.graphics.print("V0.0.1 - Pre Alpha", 10, height - 20)
 end
 
 function module.DrawTile(x, y)
