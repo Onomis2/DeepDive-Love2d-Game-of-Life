@@ -157,6 +157,30 @@ function DrawTile(x, y)
     -- If a tile was found, set color to 1
     if cell[y][x] == 1 then
         love.graphics.setColor(math.random(1,0.1), math.random(1,0.1), math.random(1,0.1))
+    module.mousepressed(x, y, button, istouch, presses, sfx)
+end
+
+function love.mousereleased(x, y, button, istouch, presses)
+    module.mousereleased(x, y, button, istouch, presses)
+end
+
+function love.mousemoved(x, y, dx, dy, istouch)
+    module.mousemoved(x, y, dx, dy, istouch, sfx)
+end
+
+function love.keypressed(key)
+    if key == "escape" then
+        love.event.quit()
+    elseif key == "c" then
+        module.clearCells()
+    elseif key == "h" then
+        debug = not debug
+    elseif key == "space" then
+        isRunning = not isRunning
+        module.setRunning(isRunning)
+    elseif key == "m" then
+        sfx = not sfx
+        module.mute(sfx)
     end
     -- Fill location of tile with rectangle and resize it accordingly
     love.graphics.rectangle("fill", (x * cellSize) - camera.pos.x + (screenSize.x / 2), (y * cellSize) - camera.pos.y + (screenSize.y / 2), cellSize, cellSize)
