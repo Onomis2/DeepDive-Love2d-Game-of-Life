@@ -6,15 +6,6 @@ local screenSize = {['x'] = width, ['y'] = height}
 local camera = {pos = {['x'] = 0, ['y'] = 0}, speed = 25}
 local cellSize = 10
 
-local isRunning = false
-
-function module.load()
-end
-
-function module.update(dt, isRunning)
-    -- Update logic based on isRunning
-end
-
 function countCells()
     local count = 0
     for y, row in pairs(cell) do

@@ -3,13 +3,8 @@ local module = require("module")
 local debug = true
 local isRunning = false
 
-function love.load()
-    module.load()
-end
-
 function love.update(dt)
     module.Camera()
-    module.update(dt, isRunning)
 end
 
 function love.draw()
