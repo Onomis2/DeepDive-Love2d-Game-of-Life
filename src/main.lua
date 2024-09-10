@@ -1,23 +1,5 @@
 -- Initialise variables
-local cell = {
-    [0] = {[4] = 1, [5] = 1},
-    [1] = {[4] = 1, [5] = 1},
-    [10] = {[4] = 1, [5] = 1, [6] = 1},
-    [11] = {[3] = 1, [7] = 1},
-    [12] = {[2] = 1, [8] = 1},
-    [13] = {[2] = 1, [8] = 1},
-    [14] = {[5] = 1},
-    [15] = {[3] = 1, [7] = 1},
-    [16] = {[4] = 1, [5] = 1, [6] = 1},
-    [17] = {[5] = 1},
-    [20] = {[2] = 1, [3] = 1, [4] = 1},
-    [21] = {[2] = 1, [3] = 1, [4] = 1},
-    [22] = {[1] = 1, [5] = 1},
-    [24] = {[0] = 1, [1] = 1, [5] = 1, [6] = 1},
-    [34] = {[2] = 1, [3] = 1},
-    [35] = {[2] = 1, [3] = 1}
-} -- cell[x][y][cellType]
-
+cell = {} -- cell[x][y][cellType]
 local width,height = love.window.getDesktopDimensions()
 local screenSize = {['x'] = width, ['y'] = height} -- screenSize[axis]
 local camera = {pos = {['x'] = 0, ['y'] = 0}, speed = 25} -- camera[property][axis/value][value]
@@ -186,6 +168,7 @@ function UpdateCells()
 
     for x, row in pairs(cell) do
         for y, _ in pairs(row) do
+            count = count + 1
             for dx = -1, 1 do
                 for dy = -1, 1 do
                     local nx, ny = x + dx, y + dy
@@ -222,5 +205,5 @@ function UpdateCells()
         end
     end
 
-    return newCells
+    return newCells,count
 end
