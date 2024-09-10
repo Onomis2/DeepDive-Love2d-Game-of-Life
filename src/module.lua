@@ -110,7 +110,9 @@ function module.Camera()
     end
 
     if love.keyboard.isDown('lshift') then
-        camera.speed = 50
+        camera.speed = 37.5
+    elseif love.keyboard.isDown('lctrl') then
+        camera.speed = 5
     else
         camera.speed = 25
     end
@@ -176,6 +178,49 @@ end
 
 function module.mute(state)
     sfx = state
+end
+
+function module.updateCells()
+    local newCells = {}
+    for x, row in pairs(cell) do
+        for y, _ in pairs(row) do
+            for dx = -1, 1 do
+                for dy = -1, 1 do
+                    local nx, ny = x + dx, y + dy
+                    if not newCells[nx] then newCells[nx] = {} end
+
+                    local population = 0
+                    for ddx = -1, 1 do
+                        for ddy = -1, 1 do
+                            local nnx, nny = nx + ddx, ny + ddy
+                            if not (ddx == 0 and ddy == 0) and cell[nnx] and cell[nnx][nny] == 1 then
+                                population = population + 1
+                            end
+                        end
+                    end
+
+                    if cell[nx] and cell[nx][ny] == 1 then
+                        newCells[nx][ny] = (population == 2 or population == 3) and 1 or 0
+                    else
+                        newCells[nx][ny] = (population == 3) and 1 or 0
+                    end
+                end
+            end
+        end
+    end
+
+    for x, row in pairs(newCells) do
+        for y, value in pairs(row) do
+            if value == 0 then
+                newCells[x][y] = nil
+            end
+        end
+        if next(newCells[x]) == nil then
+            newCells[x] = nil
+        end
+    end
+
+    cell = newCells
 end
 
 return module

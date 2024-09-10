@@ -6,6 +6,9 @@ local sfx = true
 
 function love.update(dt)
     module.Camera()
+    if isRunning then
+        module.updateCells()
+    end
 end
 
 function love.draw()
