@@ -7,9 +7,12 @@ local camera = {pos = {['x'] = 0, ['y'] = 0}, speed = 25}
 local cellSize = 10
 local isPlacing = false
 local isRemoving = false
+local generation = 0
 
-local place = love.audio.newSource("place.wav", "static")
-local remove = love.audio.newSource("remove.wav", "static")
+local place = love.audio.newSource("sfx/place.wav", "static")
+local remove = love.audio.newSource("sfx/remove.wav", "static")
+local select = love.audio.newSource("sfx/select.wav", "static")
+local clear = love.audio.newSource("sfx/clear.wav", "static")
 
 function countCells()
     local count = 0
@@ -23,17 +26,19 @@ function countCells()
     return count
 end
 
-function module.debug(isRunning, sfx)
+function module.debug(isRunning, sfx, pauseOnPlace)
     love.graphics.setColor(1, 1, 1)
     love.graphics.print(tostring(love.timer.getFPS()) .. " fps", 10, height - 40)
-    love.graphics.print("V0.0.1", 10, height - 20)
     love.graphics.print("Camera Speed: " .. camera.speed, 10, height - 60)
-    love.graphics.print("Camera X: " .. camera.pos.x .. ", Camera Y: " .. camera.pos.y, 10, height - 80)
-    love.graphics.print("Population: " .. countCells(), 10, height - 100)
-    love.graphics.print("isRunning: " .. tostring(isRunning), 10, height - 120)
-    love.graphics.print("SFX: " .. tostring(sfx), 10, height - 140)
+    love.graphics.print(string.format("Zoom Level: %.2fx", cellSize / 10), 10, height - 80)
+    love.graphics.print("Camera X: " .. camera.pos.x .. ", Camera Y: " .. camera.pos.y, 10, height - 100)
+    love.graphics.print("Population: " .. countCells(), 10, height - 120)
+    love.graphics.print("Generation: " .. generation, 10, height - 140)
+    love.graphics.print("isRunning: " .. tostring(isRunning), 10, height - 160)
+    love.graphics.print("SFX: " .. tostring(sfx), 10, height - 180)
+    love.graphics.print("Pause on Place: " .. tostring(pauseOnPlace), 10, height - 200)
     love.graphics.setColor(1, 1, 0)
-    love.graphics.print("DEBUG MENU", 10, height - 160)
+    love.graphics.print("DEBUG MENU", 10, height - 220)
     love.graphics.setColor(1, 1, 1)
 end
 
@@ -58,6 +63,8 @@ function module.draw()
     end
 
     grid()
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print("V0.0.1", 10, height - 20)
 end
 
 function module.DrawTile(x, y)
@@ -84,11 +91,7 @@ function module.wheelmoved(x, y)
 end
 
 function module.clearCells()
-    for y, row in pairs(cell) do
-        for x, _ in pairs(row) do
-            cell[y][x] = nil
-        end
-    end
+    cell = {}
 end
 
 function module.Camera()
@@ -110,11 +113,7 @@ function module.Camera()
 
     if love.keyboard.isDown('lshift') then
         camera.speed = 37.5
-    else
-        camera.speed = 25
-    end
-
-    if love.keyboard.isDown('lctrl') then
+    elseif love.keyboard.isDown('lctrl') then
         camera.speed = 5
     else
         camera.speed = 25
@@ -183,6 +182,14 @@ function module.mute(state)
     sfx = state
 end
 
+function module.playSFX(sfx, sound)
+    if sfx and sound == "select" then
+        love.audio.play(select)
+    elseif sfx and sound == "clear" then
+        love.audio.play(clear)
+    end
+end
+
 function module.updateCells()
     local newCells = {}
     for x, row in pairs(cell) do
@@ -224,6 +231,12 @@ function module.updateCells()
     end
 
     cell = newCells
+    generation = generation + 1
+end
+
+function module.resetCamera()
+    camera.pos.x = 0
+    camera.pos.y = 0
 end
 
 return module
