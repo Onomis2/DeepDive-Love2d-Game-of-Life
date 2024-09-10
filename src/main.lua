@@ -10,7 +10,7 @@ end
 
 function love.draw()
     module.draw()
-    if debug then module.debug(isRunning, sfx) end -- sfx is here to display if its on or off
+    if debug then module.debug(isRunning, sfx) end
 end
 
 function love.wheelmoved(x, y)

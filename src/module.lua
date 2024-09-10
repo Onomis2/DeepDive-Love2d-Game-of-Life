@@ -6,8 +6,10 @@ local screenSize = {['x'] = width, ['y'] = height}
 local camera = {pos = {['x'] = 0, ['y'] = 0}, speed = 25}
 local cellSize = 10
 local isPlacing = false
+local isRemoving = false
 
-local placeSound = love.audio.newSource("place.wav", "static")
+local place = love.audio.newSource("place.wav", "static")
+local remove = love.audio.newSource("remove.wav", "static")
 
 function countCells()
     local count = 0
@@ -57,7 +59,9 @@ end
 
 function module.DrawTile(x, y)
     if cell[y][x] == 1 then
-        love.graphics.setColor(0, 1, 0)
+        love.graphics.setColor(0, 1, 0) -- Alive cell (green)
+    else
+        love.graphics.setColor(0, 0, 0) -- Dead cell (black)
     end
     love.graphics.rectangle("fill", (x * cellSize) - camera.pos.x + (screenSize.x / 2), (y * cellSize) - camera.pos.y + (screenSize.y / 2), cellSize, cellSize)
 end
@@ -112,12 +116,6 @@ function module.Camera()
     end
 end
 
-local function playPlaceSound(sfx)
-    if sfx then
-        love.audio.play(placeSound)
-    end
-end
-
 local function placeCell(x, y, sfx)
     local cellX = math.floor((x - (screenSize.x / 2) + camera.pos.x) / cellSize)
     local cellY = math.floor((y - (screenSize.y / 2) + camera.pos.y) / cellSize)
@@ -128,7 +126,21 @@ local function placeCell(x, y, sfx)
 
     if cell[cellY][cellX] ~= 1 then
         cell[cellY][cellX] = 1
-        playPlaceSound(sfx)
+        if sfx then
+            love.audio.play(place)
+        end
+    end
+end
+
+local function removeCell(x, y, sfx)
+    local cellX = math.floor((x - (screenSize.x / 2) + camera.pos.x) / cellSize)
+    local cellY = math.floor((y - (screenSize.y / 2) + camera.pos.y) / cellSize)
+
+    if cell[cellY] and cell[cellY][cellX] == 1 then
+        cell[cellY][cellX] = 0
+        if sfx then
+            love.audio.play(remove)
+        end
     end
 end
 
@@ -136,18 +148,25 @@ function module.mousepressed(x, y, button, istouch, presses, sfx)
     if button == 1 then
         isPlacing = true
         placeCell(x, y, sfx)
+    elseif button == 2 then
+        isRemoving = true
+        removeCell(x, y, sfx)
     end
 end
 
 function module.mousereleased(x, y, button, istouch, presses)
     if button == 1 then
         isPlacing = false
+    elseif button == 2 then
+        isRemoving = false
     end
 end
 
 function module.mousemoved(x, y, dx, dy, istouch, sfx)
     if isPlacing then
         placeCell(x, y, sfx)
+    elseif isRemoving then
+        removeCell(x, y, sfx)
     end
 end
 
