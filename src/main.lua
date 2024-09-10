@@ -1,30 +1,42 @@
-<<<<<<< HEAD
 -- Initialise variables
-local cell = {[1] = {[1] = 1}} -- cell[x][y][cellType]
+local cell = {
+    [0] = {[4] = 1, [5] = 1},
+    [1] = {[4] = 1, [5] = 1},
+    [10] = {[4] = 1, [5] = 1, [6] = 1},
+    [11] = {[3] = 1, [7] = 1},
+    [12] = {[2] = 1, [8] = 1},
+    [13] = {[2] = 1, [8] = 1},
+    [14] = {[5] = 1},
+    [15] = {[3] = 1, [7] = 1},
+    [16] = {[4] = 1, [5] = 1, [6] = 1},
+    [17] = {[5] = 1},
+    [20] = {[2] = 1, [3] = 1, [4] = 1},
+    [21] = {[2] = 1, [3] = 1, [4] = 1},
+    [22] = {[1] = 1, [5] = 1},
+    [24] = {[0] = 1, [1] = 1, [5] = 1, [6] = 1},
+    [34] = {[2] = 1, [3] = 1},
+    [35] = {[2] = 1, [3] = 1}
+} -- cell[x][y][cellType]
+
 local width,height = love.window.getDesktopDimensions()
 local screenSize = {['x'] = width, ['y'] = height} -- screenSize[axis]
 local camera = {pos = {['x'] = 0, ['y'] = 0}, speed = 25} -- camera[property][axis/value][value]
+local text = {}
 local cellSize = 50
 local paused = true
 
-=======
-local module = require("module")
->>>>>>> test
 
 local debug = true
 local isRunning = false
 
 function love.load()
-    module.load()
 end
 
 function love.update(dt)
-<<<<<<< HEAD
     -- Game
     Controls()
     if paused == false then
-        local newCells = {}
-        cell = UpdateCells(newCells)
+        cell,text[8] = UpdateCells()
     end
 
     -- Debugging
@@ -33,6 +45,7 @@ function love.update(dt)
         tileX = math.floor((veryTempX - (screenSize.x / 2) + camera.pos.x) / cellSize)
         tileY = math.floor((veryTempY - (screenSize.y / 2) + camera.pos.y) / cellSize)
 
+        text[1] = love.timer.getFPS()
         text[2] = screenSize.x .. ":" .. screenSize.y
         text[3] = cellSize
         text[4] = camera.pos.x .. ":" .. camera.pos.y
@@ -49,18 +62,38 @@ function love.update(dt)
     end
 
 
-=======
-    module.Camera()
-    module.update(dt, isRunning)
->>>>>>> test
 end
 
 function love.draw()
-    module.draw()
-    if debug then module.debug(isRunning) end
+
+    -- Required
+    for y, row in pairs(cell) do
+        for x, value in pairs(row) do
+            DrawTile(x, y)
+        end
+    end
+
+    love.graphics.setColor(0.1, 0.1, 0.1)
+    local gridSize = cellSize >= 10 and cellSize or cellSize * 10
+    for i = 0, screenSize.x / gridSize do
+        local lineX = (i * gridSize) - camera.pos.x % gridSize + (screenSize.x / 2) % gridSize
+        love.graphics.line(lineX, 0, lineX, screenSize.y)
+    end
+    for i = 0, screenSize.y / gridSize do
+        local lineY = (i * gridSize) - camera.pos.y % gridSize + (screenSize.y / 2) % gridSize
+        love.graphics.line(0, lineY, screenSize.x, lineY)
+    end
+
+    -- Debugging
+    if debug == true then
+        for a, b in pairs(text) do
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.print(b, 10, a * 10, 0, 1, 1)
+        end
+    end
+
 end
 
-<<<<<<< HEAD
 -- Functions
 
 function love.wheelmoved(x, y, cell)
@@ -116,26 +149,24 @@ function Controls()
         camera.pos.x,camera.pos.y = 10800000,10800000
     end
 
-=======
-function love.wheelmoved(x, y)
-    module.wheelmoved(x, y)
->>>>>>> test
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
-    module.mousepressed(x, y, button, istouch, presses)
-end
 
-function love.keypressed(key)
-    if key == "escape" then
-        love.event.quit()
-    elseif key == "c" then
-        module.clearCells()
-    elseif key == "h" then
-        debug = not debug
-    elseif key == "space" then
-        isRunning = not isRunning
-        module.setRunning(isRunning)
+    -- Check left mouse press
+    if button == 1 then
+
+        -- Calculate where to place pixel
+        local cellX = math.floor((x - (screenSize.x / 2) + camera.pos.x) / cellSize)
+        local cellY = math.floor((y - (screenSize.y / 2) + camera.pos.y) / cellSize)
+
+        if not cell[cellY] then
+            cell[cellY] = {}
+        end
+
+        if not cell[cellY][cellX] then
+            cell[cellY][cellX] = 1
+        end
     end
 
 end
@@ -143,25 +174,53 @@ end
 function DrawTile(x, y)
     -- If a tile was found, set color to 1
     if cell[y][x] == 1 then
-        love.graphics.setColor(1, 1, 1)
+        love.graphics.setColor(math.random(1,0.1), math.random(1,0.1), math.random(1,0.1))
     end
     -- Fill location of tile with rectangle and resize it accordingly
     love.graphics.rectangle("fill", (x * cellSize) - camera.pos.x + (screenSize.x / 2), (y * cellSize) - camera.pos.y + (screenSize.y / 2), cellSize, cellSize)
 end
 
-function UpdateCells(newCells)
+function UpdateCells()
+    local newCells = {}
+    local count = 0
 
-    for a,b in ipairs(cell) do
-        local population = 0
-        for x = -1,1 do
-            for y = -1,1 do
-                if not x == 0 and y == 0 and cell[x][y] == 1 then
-                    population = population + 1
+    for x, row in pairs(cell) do
+        for y, _ in pairs(row) do
+            for dx = -1, 1 do
+                for dy = -1, 1 do
+                    local nx, ny = x + dx, y + dy
+                    if not newCells[nx] then newCells[nx] = {} end
+
+                    local population = 0
+                    for ddx = -1, 1 do
+                        for ddy = -1, 1 do
+                            local nnx, nny = nx + ddx, ny + ddy
+                            if not (ddx == 0 and ddy == 0) and cell[nnx] and cell[nnx][nny] == 1 then
+                                population = population + 1
+                            end
+                        end
+                    end
+
+                    if cell[nx] and cell[nx][ny] == 1 then
+                        newCells[nx][ny] = (population == 2 or population == 3) and 1 or 0
+                    else
+                        newCells[nx][ny] = (population == 3) and 1 or 0
+                    end
                 end
             end
         end
-        if population == 2 or population == 3 or
     end
 
+    for x, row in pairs(newCells) do
+        for y, value in pairs(row) do
+            if value == 0 then
+                newCells[x][y] = nil
+            end
+        end
+        if next(newCells[x]) == nil then
+            newCells[x] = nil
+        end
+    end
 
+    return newCells
 end
