@@ -59,5 +59,8 @@ function love.keypressed(key)
     elseif key == "p" then
         pauseOnPlace = not pauseOnPlace
         module.playSFX(sfx, "select")
+    elseif key == "g" then
+        module.toggleGridVisibility()
+        module.playSFX(sfx, "select")
     end
 end

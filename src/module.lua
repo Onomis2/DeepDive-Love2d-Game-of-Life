@@ -8,6 +8,7 @@ local cellSize = 10
 local isPlacing = false
 local isRemoving = false
 local generation = 0
+local isGridVisible = true -- Add this line
 
 local place = love.audio.newSource("sfx/place.wav", "static")
 local remove = love.audio.newSource("sfx/remove.wav", "static")
@@ -37,12 +38,14 @@ function module.debug(isRunning, sfx, pauseOnPlace)
     love.graphics.print("isRunning: " .. tostring(isRunning), 10, height - 160)
     love.graphics.print("SFX: " .. tostring(sfx), 10, height - 180)
     love.graphics.print("Pause on Place: " .. tostring(pauseOnPlace), 10, height - 200)
+    love.graphics.print("isGridVisible: " .. tostring(isGridVisible), 10, height - 220)
     love.graphics.setColor(1, 1, 0)
-    love.graphics.print("DEBUG MENU", 10, height - 220)
+    love.graphics.print("DEBUG MENU", 10, height - 240)
     love.graphics.setColor(1, 1, 1)
 end
 
 function grid()
+    if not isGridVisible then return end -- Add this line
     love.graphics.setColor(0.1, 0.1, 0.1)
     local gridSize = cellSize >= 10 and cellSize or cellSize * 10
     for i = 0, screenSize.x / gridSize do
@@ -180,6 +183,10 @@ end
 
 function module.mute(state)
     sfx = state
+end
+
+function module.toggleGridVisibility() -- Add this function
+    isGridVisible = not isGridVisible
 end
 
 function module.playSFX(sfx, sound)
