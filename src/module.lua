@@ -3,8 +3,8 @@ local module = {}
 cell = {[1] = {[1] = 1}}
 local width, height = love.window.getDesktopDimensions()
 local screenSize = {['x'] = width, ['y'] = height}
-local camera = {pos = {['x'] = 0, ['y'] = 0}, speed = 25}
 local cellSize = 10
+local camera = {pos = {['x'] = 1.5 * cellSize, ['y'] = 1.5 * cellSize}, speed = 25}
 local isPlacing = false
 local isRemoving = false
 local generation = 0
@@ -260,8 +260,8 @@ function module.updateCells()
 end
 
 function module.resetCamera()
-    camera.pos.x = 0
-    camera.pos.y = 0
+    camera.pos.x = 1.5 * cellSize
+    camera.pos.y = 1.5 * cellSize
 end
 
 return module
