@@ -1,8 +1,6 @@
 function love.load()
-    height = love.graphics.getHeight() - 580
-    width = love.graphics.getWidth() - 100
-    widthReset = love.graphics.getWidth() - 150
-    widthUI = love.graphics.getWidth() - 200
+    height = love.graphics.getHeight()
+    width = love.graphics.getWidth()
 
     pauseImage = love.graphics.newImage("picture/pause.png")
     playImage = love.graphics.newImage("picture/play.png")
@@ -26,9 +24,15 @@ function love.update(dt)
 end
 
 function love.draw()
-    love.graphics.print("hide UI", widthUI, height)
-    love.graphics.draw(resetImage, widthReset, height, 0, 0.4, 0.4)
-    love.graphics.draw(button, width, height, 0, 0.4, 0.4)
+    if width <= 800 and height <= 600 then
+        love.graphics.print("hide UI", width - 225, height - 580)
+        love.graphics.draw(resetImage, width - 175, height - 580, 0, 0.4, 0.4)
+        love.graphics.draw(button, width - 125, height - 580, 0, 0.4, 0.4)
+    elseif width >= 801 and height >= 601 then
+        love.graphics.print("hide UI", width - 225, height - 820)
+        love.graphics.draw(resetImage, width - 175, height - 820, 0, 0.4, 0.4)
+        love.graphics.draw(button, width - 125, height - 820, 0, 0.4, 0.4)
+    end
     local mouseX, mouseY = love.mouse.getPosition()
     love.graphics.print("Mouse X: " .. mouseX, 10, 10)
     love.graphics.print("Mouse Y: " .. mouseY, 10, 30)
