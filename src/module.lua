@@ -5,6 +5,9 @@ local width, height = love.window.getDesktopDimensions()
 local screenSize = {['x'] = width, ['y'] = height}
 local camera = {pos = {['x'] = 0, ['y'] = 0}, speed = 25}
 local cellSize = 10
+local isPlacing = false
+
+local placeSound = love.audio.newSource("place.wav", "static")
 
 function countCells()
     local count = 0
@@ -18,7 +21,7 @@ function countCells()
     return count
 end
 
-function module.debug(isRunning)
+function module.debug(isRunning, sfx)
     love.graphics.setColor(1, 1, 1)
     love.graphics.print(tostring(love.timer.getFPS()) .. " fps", 10, height - 40)
     love.graphics.print("V0.0.1", 10, height - 20)
@@ -26,6 +29,7 @@ function module.debug(isRunning)
     love.graphics.print("Camera X: " .. camera.pos.x .. ", Camera Y: " .. camera.pos.y, 10, height - 80)
     love.graphics.print("Population: " .. countCells(), 10, height - 100)
     love.graphics.print("isRunning: " .. tostring(isRunning), 10, height - 120)
+    love.graphics.print("SFX: " .. tostring(sfx), 10, height - 140)
 end
 
 function grid()
@@ -108,23 +112,51 @@ function module.Camera()
     end
 end
 
-function module.mousepressed(x, y, button, istouch, presses)
+local function playPlaceSound(sfx)
+    if sfx then
+        love.audio.play(placeSound)
+    end
+end
+
+local function placeCell(x, y, sfx)
+    local cellX = math.floor((x - (screenSize.x / 2) + camera.pos.x) / cellSize)
+    local cellY = math.floor((y - (screenSize.y / 2) + camera.pos.y) / cellSize)
+
+    if not cell[cellY] then
+        cell[cellY] = {}
+    end
+
+    if cell[cellY][cellX] ~= 1 then
+        cell[cellY][cellX] = 1
+        playPlaceSound(sfx)
+    end
+end
+
+function module.mousepressed(x, y, button, istouch, presses, sfx)
     if button == 1 then
-        local cellX = math.floor((x - (screenSize.x / 2) + camera.pos.x) / cellSize)
-        local cellY = math.floor((y - (screenSize.y / 2) + camera.pos.y) / cellSize)
+        isPlacing = true
+        placeCell(x, y, sfx)
+    end
+end
 
-        if not cell[cellY] then
-            cell[cellY] = {}
-        end
+function module.mousereleased(x, y, button, istouch, presses)
+    if button == 1 then
+        isPlacing = false
+    end
+end
 
-        if not cell[cellY][cellX] then
-            cell[cellY][cellX] = 1
-        end
+function module.mousemoved(x, y, dx, dy, istouch, sfx)
+    if isPlacing then
+        placeCell(x, y, sfx)
     end
 end
 
 function module.setRunning(state)
     isRunning = state
+end
+
+function module.mute(state)
+    sfx = state
 end
 
 return module

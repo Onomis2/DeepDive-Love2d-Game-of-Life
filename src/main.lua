@@ -2,6 +2,7 @@ local module = require("module")
 
 local debug = true
 local isRunning = false
+local sfx = true
 
 function love.update(dt)
     module.Camera()
@@ -9,7 +10,7 @@ end
 
 function love.draw()
     module.draw()
-    if debug then module.debug(isRunning) end
+    if debug then module.debug(isRunning, sfx) end -- sfx is here to display if its on or off
 end
 
 function love.wheelmoved(x, y)
@@ -17,7 +18,15 @@ function love.wheelmoved(x, y)
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
-    module.mousepressed(x, y, button, istouch, presses)
+    module.mousepressed(x, y, button, istouch, presses, sfx)
+end
+
+function love.mousereleased(x, y, button, istouch, presses)
+    module.mousereleased(x, y, button, istouch, presses)
+end
+
+function love.mousemoved(x, y, dx, dy, istouch)
+    module.mousemoved(x, y, dx, dy, istouch, sfx)
 end
 
 function love.keypressed(key)
@@ -30,5 +39,8 @@ function love.keypressed(key)
     elseif key == "space" then
         isRunning = not isRunning
         module.setRunning(isRunning)
+    elseif key == "m" then
+        sfx = not sfx
+        module.mute(sfx)
     end
 end
