@@ -1,6 +1,6 @@
 local module = {}
 
-local cell = {[1] = {[1] = 1}}
+cell = {[1] = {[1] = 1}}
 local width, height = love.window.getDesktopDimensions()
 local screenSize = {['x'] = width, ['y'] = height}
 local camera = {pos = {['x'] = 0, ['y'] = 0}, speed = 25}
@@ -32,6 +32,9 @@ function module.debug(isRunning, sfx)
     love.graphics.print("Population: " .. countCells(), 10, height - 100)
     love.graphics.print("isRunning: " .. tostring(isRunning), 10, height - 120)
     love.graphics.print("SFX: " .. tostring(sfx), 10, height - 140)
+    love.graphics.setColor(1, 1, 0)
+    love.graphics.print("DEBUG MENU", 10, height - 160)
+    love.graphics.setColor(1, 1, 1)
 end
 
 function grid()
@@ -90,28 +93,28 @@ end
 
 function module.Camera()
     if love.keyboard.isDown('w') then
-        camera.direction = 'up'
         camera.pos.y = camera.pos.y - camera.speed
     end
 
     if love.keyboard.isDown('s') then
-        camera.direction = 'down'
         camera.pos.y = camera.pos.y + camera.speed
     end
 
     if love.keyboard.isDown('a') then
-        camera.direction = 'left'
         camera.pos.x = camera.pos.x - camera.speed
     end
 
     if love.keyboard.isDown('d') then
-        camera.direction = 'right'
         camera.pos.x = camera.pos.x + camera.speed
     end
 
     if love.keyboard.isDown('lshift') then
         camera.speed = 37.5
-    elseif love.keyboard.isDown('lctrl') then
+    else
+        camera.speed = 25
+    end
+
+    if love.keyboard.isDown('lctrl') then
         camera.speed = 5
     else
         camera.speed = 25
