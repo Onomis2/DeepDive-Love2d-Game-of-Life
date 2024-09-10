@@ -42,6 +42,7 @@ function module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu)
     love.graphics.print(string.format("Zoom Level: %.2fx", cellSize / 10), 10, height - 80)
     love.graphics.print("Camera Speed: " .. camera.speed, 10, height - 60)
     love.graphics.print(tostring(love.timer.getFPS()) .. " fps", 10, height - 40)
+    love.graphics.print("V0.0.1 - Pre Alpha", 10, height - 20)
 end
 
 function module.helpMenu()
@@ -95,7 +96,6 @@ function module.draw()
 
     grid()
     love.graphics.setColor(1, 1, 1)
-    love.graphics.print("V0.0.1 - Pre Alpha", 10, height - 20)
 end
 
 function module.DrawTile(x, y)
