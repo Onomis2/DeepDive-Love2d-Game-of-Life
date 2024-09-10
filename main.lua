@@ -36,30 +36,31 @@ function love.draw()
         love.graphics.setColor(1, 1, 1)
     end
 
-    if width <= 800 and height <= 600 then
-        love.graphics.print(hide, width - 225, height - 570)
-        love.graphics.draw(resetImage, width - 175, height - 580, 0, 0.4, 0.4)
-        love.graphics.draw(button, width - 125, height - 580, 0, 0.4, 0.4)
-
-        if love.mouse.isDown(1) and mouseX >= 625 and mouseX <= 658 and mouseY >= 18 and mouseY <= 51 then --reset
-            darkened = true
-            darkeningReset = true
-        elseif darkeningReset and not love.mouse.isDown(1) then
-            love.timer.sleep(0.5)
-            love.load()
-            darkened = false
-            darkeningReset = false
+        love.graphics.print(hide, width - 225, 50)
+        if UI == false then
+            love.graphics.draw(resetImage, width - 175, 50, 0, 0.4, 0.4)
+            love.graphics.draw(button, width - 125, 50, 0, 0.4, 0.4)
+            if love.mouse.isDown(1) and mouseX >= width - 175 and mouseX <= width - 145 and mouseY >= 50 and mouseY <= 70 then --reset
+                darkened = true
+                darkeningReset = true
+            elseif darkeningReset and not love.mouse.isDown(1) then
+                love.timer.sleep(0.5)
+                love.load()
+                darkened = false
+                darkeningReset = false
+            end
+    
+            if love.mouse.isDown(1) and mouseX >= width - 125 and mouseX <= width - 95 and mouseY >= 50 and mouseY <= 70 and play == false then --play
+                play = true
+                pause = false
+                love.timer.sleep(0.25)
+            elseif love.mouse.isDown(1) and mouseX >= width - 125 and mouseX <= width - 95 and mouseY >= 50 and mouseY <= 70 and play == true then --pause
+                play = false
+                pause = true
+                love.timer.sleep(0.25)
+            end
         end
-
-        if love.mouse.isDown(1) and mouseX >= 675 and mouseX <= 710 and mouseY >= 18 and mouseY <= 51 and play == false then --play
-            play = true
-            pause = false
-            love.timer.sleep(0.25)
-        elseif love.mouse.isDown(1) and mouseX >= 675 and mouseX <= 710 and mouseY >= 18 and mouseY <= 51 and play == true then --pause
-            play = false
-            pause = true
-            love.timer.sleep(0.25)
-        elseif love.mouse.isDown(1) and mouseX >= 574  and mouseX <= 617 and mouseY >= 30 and mouseY <= 40 then --hide UI
+        if love.mouse.isDown(1) and mouseX >= width - 225 and mouseX <= width - 185 and mouseY >= 50 and mouseY <= 60 then --hide UI
             if UI == false then
                 UI = true
             elseif UI == true then
@@ -67,38 +68,6 @@ function love.draw()
             end
             love.timer.sleep(0.25)
         end
-    elseif width >= 801 and height >= 601 then
-        love.graphics.print(hide, width - 225, height - 810)
-        love.graphics.draw(resetImage, width - 175, height - 820, 0, 0.4, 0.4)
-        love.graphics.draw(button, width - 125, height - 820, 0, 0.4, 0.4)
-
-        if love.mouse.isDown(1) and mouseX >= 1360 and mouseX <= 1395 and mouseY >= 42 and mouseY <= 75 then --reset
-            darkened = true
-            darkeningReset = true
-        elseif darkeningReset and not love.mouse.isDown(1) then
-            love.timer.sleep(0.5)
-            love.load()
-            darkened = false
-            darkeningReset = false
-        end
-
-        if love.mouse.isDown(1) and mouseX >= 1410 and mouseX <= 1445 and mouseY >= 42 and mouseY <= 75 and play == false then --play
-            play = true
-            pause = false
-            love.timer.sleep(0.25)
-        elseif love.mouse.isDown(1) and mouseX >= 1410 and mouseX <= 1445 and mouseY >= 42 and mouseY <= 75 and play == true then --pause
-            play = false
-            pause = true
-            love.timer.sleep(0.25)
-        elseif love.mouse.isDown(1) and mouseX >= 1310  and mouseX <= 1353 and mouseY >= 50 and mouseY <= 65 then --hide UI
-            if UI == false then
-                UI = true
-            elseif UI == true then
-                UI = false
-            end
-            love.timer.sleep(0.25)
-        end
-    end
 
     love.graphics.print("Mouse X: " .. mouseX, 10, 10)
     love.graphics.print("Mouse Y: " .. mouseY, 10, 30)
