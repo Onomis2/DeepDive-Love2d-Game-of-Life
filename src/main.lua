@@ -118,14 +118,6 @@ function Controls()
         camera.pos.x = camera.pos.x + camera.speed
     end
 
-    function love.keypressed( key, scancode, isrepeat )
-
-        if scancode == "space" then
-            paused = not paused
-        end
-
-    end
-
     -- Debugging keybinds
     if love.keyboard.isDown('h') and debug == true then
         camera.pos.x,camera.pos.y = 10800000,10800000
@@ -157,15 +149,17 @@ function DrawTile(x, y)
     -- If a tile was found, set color to 1
     if cell[y][x] == 1 then
         love.graphics.setColor(math.random(1,0.1), math.random(1,0.1), math.random(1,0.1))
-    module.mousepressed(x, y, button, istouch, presses, sfx)
+    end
+    love.graphics.rectangle("fill", (x * cellSize) - camera.pos.x + (screenSize.x / 2), (y * cellSize) - camera.pos.y + (screenSize.y / 2), cellSize, cellSize)
+
 end
 
 function love.mousereleased(x, y, button, istouch, presses)
-    module.mousereleased(x, y, button, istouch, presses)
+    --module.mousereleased(x, y, button, istouch, presses)
 end
 
 function love.mousemoved(x, y, dx, dy, istouch)
-    module.mousemoved(x, y, dx, dy, istouch, sfx)
+    --module.mousemoved(x, y, dx, dy, istouch, sfx)
 end
 
 function love.keypressed(key)
@@ -176,14 +170,14 @@ function love.keypressed(key)
     elseif key == "h" then
         debug = not debug
     elseif key == "space" then
-        isRunning = not isRunning
-        module.setRunning(isRunning)
+        paused = not paused
+        --module.setRunning(isRunning)
     elseif key == "m" then
         sfx = not sfx
         module.mute(sfx)
     end
     -- Fill location of tile with rectangle and resize it accordingly
-    love.graphics.rectangle("fill", (x * cellSize) - camera.pos.x + (screenSize.x / 2), (y * cellSize) - camera.pos.y + (screenSize.y / 2), cellSize, cellSize)
+    --module.mousepressed(x, y, button, istouch, presses, sfx)
 end
 
 function UpdateCells()
