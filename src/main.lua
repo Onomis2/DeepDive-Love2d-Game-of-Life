@@ -4,6 +4,7 @@ local debug = true
 local isRunning = false
 local sfx = true
 local pauseOnPlace = false
+local showHelpMenu = true
 
 function love.update(dt)
     module.Camera()
@@ -14,6 +15,7 @@ end
 
 function love.draw()
     module.draw()
+    if showHelpMenu then module.helpMenu() end
     if debug then module.debug(isRunning, sfx, pauseOnPlace) end
 end
 
@@ -61,6 +63,9 @@ function love.keypressed(key)
         module.playSFX(sfx, "select")
     elseif key == "g" then
         module.toggleGridVisibility()
+        module.playSFX(sfx, "select")
+    elseif key == "n" then
+        showHelpMenu = not showHelpMenu
         module.playSFX(sfx, "select")
     end
 end

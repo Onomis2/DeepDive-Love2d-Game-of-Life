@@ -44,6 +44,20 @@ function module.debug(isRunning, sfx, pauseOnPlace)
     love.graphics.setColor(1, 1, 1)
 end
 
+function module.helpMenu()
+    love.graphics.setColor(0.68, 0.85, 0.90) -- Set color to light blue
+    love.graphics.print("Help Menu", width - 150, height - 180)
+    love.graphics.setColor(1, 1, 1) -- Reset color to white
+    love.graphics.print("N: Hide help menu", width - 150, height - 160)
+    love.graphics.print("C: Clear all cells", width - 150, height - 140)
+    love.graphics.print("H: Hide Debug Menu", width - 150, height - 120)
+    love.graphics.print("SPACE: Start/Pause", width - 150, height - 100)
+    love.graphics.print("M: Mute Sfx", width - 150, height - 80)
+    love.graphics.print("R: Reset camera pos", width - 150, height - 60)
+    love.graphics.print("P: Pause when placing", width - 150, height - 40)
+    love.graphics.print("G: Hide/Show grid", width - 150, height - 20)
+end
+
 function grid()
     if not isGridVisible then return end -- Add this line
     love.graphics.setColor(0.1, 0.1, 0.1)
