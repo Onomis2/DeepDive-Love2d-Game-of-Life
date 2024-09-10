@@ -21,30 +21,40 @@ end
 function love.draw()
     local mouseX, mouseY = love.mouse.getPosition()
     if width <= 800 and height <= 600 then
-        love.graphics.print("hide UI", width - 225, height - 580)
+        love.graphics.print("hide UI", width - 225, height - 570)
         love.graphics.draw(resetImage, width - 175, height - 580, 0, 0.4, 0.4)
         love.graphics.draw(button, width - 125, height - 580, 0, 0.4, 0.4)
-        if love.mouse.isDown(1) and mouseX >= 675 and mouseX <= 710 and mouseY >= 18 and mouseY <= 51 and play == false then
+        if love.mouse.isDown(1) and mouseX >= 675 and mouseX <= 710 and mouseY >= 18 and mouseY <= 51 and play == false then --play
             play = true
             pause = false
-            love.timer.sleep(0.5)
-        elseif love.mouse.isDown(1) and mouseX >= 675 and mouseX <= 710 and mouseY >= 18 and mouseY <= 51 and play == true then
+            love.timer.sleep(0.25)
+        elseif love.mouse.isDown(1) and mouseX >= 675 and mouseX <= 710 and mouseY >= 18 and mouseY <= 51 and play == true then --pause
             play = false
             pause = true
-            love.timer.sleep(0.5)
+            love.timer.sleep(0.25)
+        elseif love.mouse.isDown(1) and mouseX >= 625 and mouseX <= 690 and mouseY >= 18 and mouseY <= 51 then --reset
+            love.load()
+            love.timer.sleep(0.25)
+        elseif love.mouse.isDown(1) and mouseX >= 574  and mouseX <= 617 and mouseY >= 30 and mouseY <= 40 then --hide UI
+            love.timer.sleep(0.25)
         end
     elseif width >= 801 and height >= 601 then
-        love.graphics.print("hide UI", width - 225, height - 820)
+        love.graphics.print("hide UI", width - 225, height - 810)
         love.graphics.draw(resetImage, width - 175, height - 820, 0, 0.4, 0.4)
         love.graphics.draw(button, width - 125, height - 820, 0, 0.4, 0.4)
-        if love.mouse.isDown(1) and mouseX >= 1410 and mouseX <= 1445 and mouseY >= 42 and mouseY <= 75 and play == false then
+        if love.mouse.isDown(1) and mouseX >= 1410 and mouseX <= 1445 and mouseY >= 42 and mouseY <= 75 and play == false then --play
             play = true
             pause = false
-            love.timer.sleep(0.5)
-        elseif love.mouse.isDown(1) and mouseX >= 1410 and mouseX <= 1445 and mouseY >= 42 and mouseY <= 75 and play == true then
+            love.timer.sleep(0.25)
+        elseif love.mouse.isDown(1) and mouseX >= 1410 and mouseX <= 1445 and mouseY >= 42 and mouseY <= 75 and play == true then --pause
             play = false
             pause = true
-            love.timer.sleep(0.5)
+            love.timer.sleep(0.25)
+        elseif love.mouse.isDown(1) and mouseX >= 1358 and mouseX <= 1395 and mouseY >= 42 and mouseY <= 75 then --reset
+            love.load()
+            love.timer.sleep(0.25)
+        elseif love.mouse.isDown(1) and mouseX >= 1310  and mouseX <= 1353 and mouseY >= 50 and mouseY <= 65 then --hide UI
+            love.timer.sleep(0.25)
         end
     end
     
