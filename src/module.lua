@@ -27,7 +27,7 @@ function countCells()
     return count
 end
 
-function module.debug(isRunning, sfx, pauseOnPlace)
+function module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu)
     love.graphics.setColor(1, 1, 1)
     love.graphics.print(tostring(love.timer.getFPS()) .. " fps", 10, height - 40)
     love.graphics.print("Camera Speed: " .. camera.speed, 10, height - 60)
@@ -39,8 +39,9 @@ function module.debug(isRunning, sfx, pauseOnPlace)
     love.graphics.print("SFX: " .. tostring(sfx), 10, height - 180)
     love.graphics.print("Pause on Place: " .. tostring(pauseOnPlace), 10, height - 200)
     love.graphics.print("isGridVisible: " .. tostring(isGridVisible), 10, height - 220)
+    love.graphics.print("showHelpMenu: " .. tostring(showHelpMenu), 10, height - 240)
     love.graphics.setColor(1, 1, 0)
-    love.graphics.print("DEBUG MENU", 10, height - 240)
+    love.graphics.print("DEBUG MENU", 10, height - 260)
     love.graphics.setColor(1, 1, 1)
 end
 

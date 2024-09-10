@@ -16,7 +16,7 @@ end
 function love.draw()
     module.draw()
     if showHelpMenu then module.helpMenu() end
-    if debug then module.debug(isRunning, sfx, pauseOnPlace) end
+    if debug then module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu) end
 end
 
 function love.wheelmoved(x, y)
