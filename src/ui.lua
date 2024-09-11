@@ -15,6 +15,7 @@ local heavyShip = love.graphics.newImage("picture/heavy-ship.png")
 local pulsatingGlider = love.graphics.newImage("picture/pulsating-glider.png")
 local spaceship = love.graphics.newImage("picture/spaceship.png")
 local wheelOfFire = love.graphics.newImage("picture/wheel-of-fire.png")
+local block = love.graphics.newImage("picture/block.png")
 
 local debounce = false
 local play = false
@@ -60,8 +61,9 @@ function ui.draw()
     if UI == false then
         love.graphics.draw(resetImage, width - 175, 25, 0, 0.4, 0.4)
         love.graphics.draw(button, width - 125, 25, 0, 0.4, 0.4)
-        love.graphics.draw(gliderGun, width - 1470, 25, 0, 0.24, 0.24)
+        love.graphics.draw(block, width - 1520, 25, 0, 0.24, 0.24)
         love.graphics.draw(glider, width - 1270, 25, 0, 0.25, 0.25)
+        love.graphics.draw(gliderGun, width - 1470, 25, 0, 0.24, 0.24)
         love.graphics.draw(flyingShip, width - 1230, 25, 0, 0.23, 0.23)
         love.graphics.draw(pulsar, width - 1110, 25, 0, 0.23, 0.23)
         love.graphics.draw(heavyShip, width - 1030, 25, 0, 0.25, 0.25)
