@@ -94,13 +94,4 @@ function love.draw()
         darkened = false
         darkeningReset = false
     end
-
-    love.graphics.print("Mouse X: " .. mouseX, 10, 10)
-    love.graphics.print("Mouse Y: " .. mouseY, 10, 30)
-end
-
-function love.keypressed(key)
-    if key == "escape" then
-        love.event.quit()
-    end
 end
