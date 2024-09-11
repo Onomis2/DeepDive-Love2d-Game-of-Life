@@ -5,7 +5,6 @@ local cellSize = 10
 local generation = 0
 local count = 0
 
-cell = {[1] = {[1] = 1}}
 local cellColor = {0, 1, 0}
 local width, height = love.window.getDesktopDimensions()
 local screenSize = {['x'] = width, ['y'] = height}
@@ -33,18 +32,6 @@ local colors = {
     {1, 1, 1} -- White
 }
 local currentColorIndex = 1
-
-function countCells()
-    local count = 0
-    for y, row in pairs(cell) do
-        for x, value in pairs(row) do
-            if value == 1 then
-                count = count + 1
-            end
-        end
-    end
-    return count
-end
 
 function module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu, tickSpeed, tickCount)
     love.graphics.setColor(1, 1, 0)

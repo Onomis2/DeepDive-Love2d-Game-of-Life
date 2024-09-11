@@ -1,4 +1,5 @@
-local module = {}
+module = require("module")
+local ui = {}
 
 local height = love.graphics.getHeight()
 local width = love.graphics.getWidth()
@@ -22,7 +23,8 @@ local UI = false
 local darkened = false
 local darkeningReset = false
 
-function love.update(dt)
+function ui.buttons()
+
     if play == false then
         button = playImage
     elseif pause == false then
@@ -34,18 +36,17 @@ function love.update(dt)
     elseif UI == true then
         hide = "show UI"
     end
+
 end
 
-function love.draw()
-    local mouseX, mouseY = love.mouse.getPosition()
-
+function ui.draw()
 
     if UI == false then
-        love.graphics.setColor(0.2, 0.2, 0.2)
+        love.graphics.setColor(0.2, 0.2, 0.2, 0.5)
         love.graphics.rectangle("fill", 0, 0, width, 125)
     end
 
-    if darkened then
+    if darkened == true then
         love.graphics.setColor(0.5, 0.5, 0.5)
     else
         love.graphics.setColor(1, 1, 1)
@@ -64,7 +65,12 @@ function love.draw()
         love.graphics.draw(spaceship, width - 900, 25, 0, 0.23, 0.23)
         love.graphics.draw(wheelOfFire, width - 800, 25, 0, 0.23, 0.23)
     end
+
+end
+
+function ui.controls(isRunning)
     
+    local mouseX, mouseY = love.mouse.getPosition()
     if love.mouse.isDown(1) and not debounce then
         debounce = true
         if UI == false then
@@ -75,9 +81,15 @@ function love.draw()
                 if play == false then --play
                     play = true
                     pause = false
+                    isRunning = true
+                    module.setRunning(isRunning)
+                    module.playSFX(sfx, "select")
                 elseif play == true then --pause
                     play = false
                     pause = true
+                    isRunning = false
+                    module.setRunning(isRunning)
+                    module.playSFX(sfx, "select")
                 end
             end
         end
@@ -87,10 +99,16 @@ function love.draw()
     elseif not love.mouse.isDown(1) then
         debounce = false
     end
-    
-    if darkeningReset and not love.mouse.isDown(1) then
-        love.load()
+
+    if darkeningReset == true and not love.mouse.isDown(1) then
+        module.clearCells()
+        module.playSFX(sfx, "clear")
         darkened = false
         darkeningReset = false
     end
+
+    return isRunning
+
 end
+
+return ui
