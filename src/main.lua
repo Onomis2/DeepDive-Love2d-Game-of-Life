@@ -76,8 +76,8 @@ function love.keypressed(key)
         debug = not debug
         module.playSFX(sfx, "select")
     elseif key == "space" then
-        isRunning = not isRunning
         ui.changePlayPauseButton(isRunning)
+        isRunning = not isRunning
         module.setRunning(isRunning)
         module.playSFX(sfx, "select")
     elseif key == "m" then
