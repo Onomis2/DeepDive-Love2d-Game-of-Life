@@ -50,7 +50,8 @@ function love.mousepressed(x, y, button, istouch, presses)
         isRunning = false
         module.setRunning(isRunning)
     end
-    module.mousepressed(x, y, button, istouch, presses, sfx)
+    local uiBool = ui.returnUI()
+    module.mousepressed(x, y, button, istouch, presses, sfx, uiBool)
 end
 
 function love.mousereleased(x, y, button, istouch, presses)
