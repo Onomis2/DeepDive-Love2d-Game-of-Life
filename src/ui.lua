@@ -1,29 +1,30 @@
+module = require("module")
+local ui = {}
+
+local height = love.graphics.getHeight()
+local width = love.graphics.getWidth()
+
+local pauseImage = love.graphics.newImage("picture/pause.png")
+local playImage = love.graphics.newImage("picture/play.png")
+local resetImage = love.graphics.newImage("picture/reset.png")
+local gliderGun = love.graphics.newImage("picture/glider-gun.png")
+local glider = love.graphics.newImage("picture/glider.png")
+local flyingShip = love.graphics.newImage("picture/flying-ship.png")
+local pulsar = love.graphics.newImage("picture/pulsar.png")
+local heavyShip = love.graphics.newImage("picture/heavy-ship.png")
+local pulsatingGlider = love.graphics.newImage("picture/pulsating-glider.png")
+local spaceship = love.graphics.newImage("picture/spaceship.png")
+local wheelOfFire = love.graphics.newImage("picture/wheel-of-fire.png")
+
 local debounce = false
+local play = false
+local pause = true
+local UI = false
+local darkened = false
+local darkeningReset = false
 
-function love.load()
-    height = love.graphics.getHeight()
-    width = love.graphics.getWidth()
+function ui.buttons()
 
-    pauseImage = love.graphics.newImage("picture/pause.png")
-    playImage = love.graphics.newImage("picture/play.png")
-    resetImage = love.graphics.newImage("picture/reset.png")
-    gliderGun = love.graphics.newImage("picture/glider-gun.png")
-    glider = love.graphics.newImage("picture/glider.png")
-    flyingShip = love.graphics.newImage("picture/flying-ship.png")
-    pulsar = love.graphics.newImage("picture/pulsar.png")
-    heavyShip = love.graphics.newImage("picture/heavy-ship.png")
-    pulsatingGlider = love.graphics.newImage("picture/pulsating-glider.png")
-    spaceship = love.graphics.newImage("picture/spaceship.png")
-    wheelOfFire = love.graphics.newImage("picture/wheel-of-fire.png")
-
-    play = false
-    pause = true
-    UI = false
-    darkened = false
-    darkeningReset = false
-end
-
-function love.update(dt)
     if play == false then
         button = playImage
     elseif pause == false then
@@ -35,18 +36,17 @@ function love.update(dt)
     elseif UI == true then
         hide = "show UI"
     end
+
 end
 
-function love.draw()
-    local mouseX, mouseY = love.mouse.getPosition()
-
+function ui.draw()
 
     if UI == false then
-        love.graphics.setColor(0.2, 0.2, 0.2)
+        love.graphics.setColor(0.2, 0.2, 0.2, 0.5)
         love.graphics.rectangle("fill", 0, 0, width, 125)
     end
 
-    if darkened then
+    if darkened == true then
         love.graphics.setColor(0.5, 0.5, 0.5)
     else
         love.graphics.setColor(1, 1, 1)
@@ -65,7 +65,12 @@ function love.draw()
         love.graphics.draw(spaceship, width - 900, 25, 0, 0.23, 0.23)
         love.graphics.draw(wheelOfFire, width - 800, 25, 0, 0.23, 0.23)
     end
+
+end
+
+function ui.controls(isRunning)
     
+    local mouseX, mouseY = love.mouse.getPosition()
     if love.mouse.isDown(1) and not debounce then
         debounce = true
         if UI == false then
@@ -76,9 +81,15 @@ function love.draw()
                 if play == false then --play
                     play = true
                     pause = false
+                    isRunning = true
+                    module.setRunning(isRunning)
+                    module.playSFX(sfx, "select")
                 elseif play == true then --pause
                     play = false
                     pause = true
+                    isRunning = false
+                    module.setRunning(isRunning)
+                    module.playSFX(sfx, "select")
                 end
             end
         end
@@ -88,10 +99,16 @@ function love.draw()
     elseif not love.mouse.isDown(1) then
         debounce = false
     end
-    
-    if darkeningReset and not love.mouse.isDown(1) then
-        love.load()
+
+    if darkeningReset == true and not love.mouse.isDown(1) then
+        module.clearCells()
+        module.playSFX(sfx, "clear")
         darkened = false
         darkeningReset = false
     end
+
+    return isRunning
+
 end
+
+return ui

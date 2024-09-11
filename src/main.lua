@@ -1,4 +1,7 @@
 local module = require("module")
+local ui = require("ui")
+
+cell = {[1] = {[1] = 1}}
 
 local debug = true
 local isRunning = false
@@ -10,7 +13,10 @@ local tickSpeed = 1
 local tickCount = 0.0
 
 function love.update(dt)
+
+    ui.buttons()
     module.Camera()
+    isRunning = ui.controls(isRunning)
     if isRunning and tickSpeed >= 1 then
         for i = 1,tickSpeed do
             module.updateCells()
@@ -26,9 +32,18 @@ function love.update(dt)
 end
 
 function love.draw()
+
+
     module.draw()
-    if showHelpMenu then module.helpMenu() end
-    if debug then module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu, tickSpeed, tickCount) end
+    ui.draw()
+
+    if showHelpMenu then
+         module.helpMenu()
+    end
+    if debug then
+        module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu, tickSpeed, tickCount)
+    end
+
 end
 
 function love.wheelmoved(x, y)
