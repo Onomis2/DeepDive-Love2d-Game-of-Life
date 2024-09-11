@@ -67,5 +67,17 @@ function love.keypressed(key)
     elseif key == "n" then
         showHelpMenu = not showHelpMenu
         module.playSFX(sfx, "select")
+    elseif key == "e" and debug then -- its for now only for debug mode
+        module.cycleColor()
+        module.playSFX(sfx, "select")
+    elseif key == "1" then
+        local x, y = love.mouse.getPosition()
+        module.placeCell(x, y, sfx)
+    elseif key == "2" then
+        local x, y = love.mouse.getPosition()
+        module.placeGlider(x, y, sfx)
+    elseif key == "3" then
+        local x, y = love.mouse.getPosition()
+        module.placeHWSS(x, y, sfx)
     end
 end

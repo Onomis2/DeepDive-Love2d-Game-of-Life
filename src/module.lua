@@ -1,6 +1,8 @@
 local module = {}
+local patterns = require("patterns")
 
 cell = {[1] = {[1] = 1}}
+local cellColor = {0, 1, 0}
 local width, height = love.window.getDesktopDimensions()
 local screenSize = {['x'] = width, ['y'] = height}
 local cellSize = 10
@@ -14,6 +16,18 @@ local place = love.audio.newSource("sfx/place.wav", "static")
 local remove = love.audio.newSource("sfx/remove.wav", "static")
 local select = love.audio.newSource("sfx/select.wav", "static")
 local clear = love.audio.newSource("sfx/clear.wav", "static")
+
+local colors = {
+    {0.1, 1, 0.1}, -- Green
+    {0.2, 0.2, 1}, -- Blue
+    {1, 0.2, 0.2}, -- Red
+    {1, 0.6, 0.2}, -- Orange
+    {1, 1, 0.1}, -- Yellow
+    {0.8, 0.2, 0.8}, -- Purple
+    {0.2, 1, 1}, -- Cyan
+    {1, 1, 1} -- White
+}
+local currentColorIndex = 1
 
 function countCells()
     local count = 0
@@ -72,7 +86,6 @@ function module.helpMenu()
     love.graphics.print("ESC: Exit game", width - 165, height - 20)
 end
 
-
 function grid()
     if not isGridVisible then return end
     love.graphics.setColor(0.1, 0.1, 0.1)
@@ -100,7 +113,7 @@ end
 
 function module.DrawTile(x, y)
     if cell[y][x] == 1 then
-        love.graphics.setColor(0, 1, 0) -- Alive cell (green)
+        love.graphics.setColor(cellColor) -- Alive cell (green)
     else
         love.graphics.setColor(0, 0, 0) -- Dead cell (black)
     end
@@ -151,7 +164,7 @@ function module.Camera()
     end
 end
 
-local function placeCell(x, y, sfx)
+function module.placeCell(x, y, sfx)
     local cellX = math.floor((x - (screenSize.x / 2) + camera.pos.x) / cellSize)
     local cellY = math.floor((y - (screenSize.y / 2) + camera.pos.y) / cellSize)
 
@@ -182,7 +195,7 @@ end
 function module.mousepressed(x, y, button, istouch, presses, sfx)
     if button == 1 then
         isPlacing = true
-        placeCell(x, y, sfx)
+        module.placeCell(x, y, sfx)
     elseif button == 2 then
         isRemoving = true
         removeCell(x, y, sfx)
@@ -199,7 +212,7 @@ end
 
 function module.mousemoved(x, y, dx, dy, istouch, sfx)
     if isPlacing then
-        placeCell(x, y, sfx)
+        module.placeCell(x, y, sfx)
     elseif isRemoving then
         removeCell(x, y, sfx)
     end
@@ -211,6 +224,15 @@ end
 
 function module.mute(state)
     sfx = state
+end
+
+function module.cellColor(color)
+    cellColor = color
+end
+
+function module.cycleColor()
+    currentColorIndex = currentColorIndex % #colors + 1
+    module.cellColor(colors[currentColorIndex])
 end
 
 function module.toggleGridVisibility()
@@ -272,6 +294,28 @@ end
 function module.resetCamera()
     camera.pos.x = 1.5 * cellSize
     camera.pos.y = 1.5 * cellSize
+end
+
+function module.placePattern(x, y, pattern, sfx, offsetX, offsetY)
+    for dy, row in ipairs(pattern) do
+        for dx, value in ipairs(row) do
+            if value == 1 then
+                module.placeCell(x + (dx + offsetX) * cellSize, y + (dy + offsetY) * cellSize, sfx)
+            end
+        end
+    end
+end
+
+function module.placeGlider(x, y, sfx)
+    local offsetX = -2
+    local offsetY = -2
+    module.placePattern(x, y, patterns.glider, sfx, offsetX, offsetY)
+end
+
+function module.placeHWSS(x, y, sfx)
+    local offsetX = -4
+    local offsetY = -3
+    module.placePattern(x, y, patterns.hwss, sfx, offsetX, offsetY)
 end
 
 return module
