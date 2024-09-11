@@ -18,16 +18,20 @@ local wheelOfFire = love.graphics.newImage("picture/wheel-of-fire.png")
 
 local debounce = false
 local play = false
-local pause = true
 local UI = false
 local darkened = false
 local darkeningReset = false
 
+function ui.changePlayPauseButton(running)
+
+    play = not running
+end
+
 function ui.buttons()
 
-    if play == false then
+    if play == true then
         button = playImage
-    elseif pause == false then
+    elseif play == false then
         button = pauseImage
     end
 
@@ -80,13 +84,11 @@ function ui.controls(isRunning)
             elseif mouseX >= width - 125 and mouseX <= width - 95 and mouseY >= 23 and mouseY <= 55 then
                 if play == false then --play
                     play = true
-                    pause = false
                     isRunning = true
                     module.setRunning(isRunning)
                     module.playSFX(sfx, "select")
                 elseif play == true then --pause
                     play = false
-                    pause = true
                     isRunning = false
                     module.setRunning(isRunning)
                     module.playSFX(sfx, "select")
