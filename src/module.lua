@@ -339,5 +339,16 @@ function module.placeGliderGun(x, y, sfx)
     module.placePattern(x, y, patterns.gliderGun, sfx, offsetX, offsetY)
 end
 
+function module.placeWheelOfFire(x, y, sfx)
+    local offsetX = -4
+    local offsetY = -5
+    module.placePattern(x, y, patterns.wheelOfFire, sfx, offsetX, offsetY)
+end
+
+function module.placeSpaceship(x, y, sfx)
+    local offsetX = -4
+    local offsetY = -5
+    module.placePattern(x, y, patterns.spaceship, sfx, offsetX, offsetY)
+end
 
 return module

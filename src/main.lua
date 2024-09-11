@@ -100,6 +100,12 @@ function love.keypressed(key)
     elseif key == "6" then
         local x, y = love.mouse.getPosition()
         module.placeGliderGun(x, y, sfx)
+    elseif key == "7" then
+        local x, y = love.mouse.getPosition()
+        module.placeWheelOfFire(x, y, sfx)
+    elseif key == "8" then
+        local x, y = love.mouse.getPosition()
+        module.placeSpaceship(x, y, sfx)
     elseif key == "up" then
         if tickSpeed > 1 then
             tickSpeed = tickSpeed + 1
