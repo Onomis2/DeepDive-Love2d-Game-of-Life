@@ -17,6 +17,18 @@ local remove = love.audio.newSource("sfx/remove.wav", "static")
 local select = love.audio.newSource("sfx/select.wav", "static")
 local clear = love.audio.newSource("sfx/clear.wav", "static")
 
+local colors = {
+    {0.1, 1, 0.1}, -- Green
+    {0.2, 0.2, 1}, -- Blue
+    {1, 0.2, 0.2}, -- Red
+    {1, 0.6, 0.2}, -- Orange
+    {1, 1, 0.1}, -- Yellow
+    {0.8, 0.2, 0.8}, -- Purple
+    {0.2, 1, 1}, -- Cyan
+    {1, 1, 1} -- White
+}
+local currentColorIndex = 1
+
 function countCells()
     local count = 0
     for y, row in pairs(cell) do
@@ -215,7 +227,12 @@ function module.mute(state)
 end
 
 function module.cellColor(color)
-    -- empty
+    cellColor = color
+end
+
+function module.cycleColor()
+    currentColorIndex = currentColorIndex % #colors + 1
+    module.cellColor(colors[currentColorIndex])
 end
 
 function module.toggleGridVisibility()
