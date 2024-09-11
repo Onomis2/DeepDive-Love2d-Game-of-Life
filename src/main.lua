@@ -6,17 +6,29 @@ local sfx = true
 local pauseOnPlace = false
 local showHelpMenu = true
 
+local tickSpeed = 1
+local tickCount = 0.0
+
 function love.update(dt)
     module.Camera()
-    if isRunning then
-        module.updateCells()
+    if isRunning and tickSpeed >= 1 then
+        for i = 1,tickSpeed do
+            module.updateCells()
+        end
+    elseif isRunning and tickSpeed < 1 then
+        tickCount = tickCount + tickSpeed
+        if tickCount >= 1 then
+            tickCount = 0.0
+            module.updateCells()
+        end
     end
+
 end
 
 function love.draw()
     module.draw()
     if showHelpMenu then module.helpMenu() end
-    if debug then module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu) end
+    if debug then module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu, tickSpeed, tickCount) end
 end
 
 function love.wheelmoved(x, y)
@@ -79,5 +91,17 @@ function love.keypressed(key)
     elseif key == "3" then
         local x, y = love.mouse.getPosition()
         module.placeHWSS(x, y, sfx)
+    elseif key == "up" then
+        if tickSpeed > 1 then
+            tickSpeed = tickSpeed + 1
+        else
+            tickSpeed = tickSpeed * 2
+        end
+    elseif key == "down" then
+        if tickSpeed > 1 then
+            tickSpeed = tickSpeed - 1
+        else
+            tickSpeed = tickSpeed / 2
+        end
     end
 end
