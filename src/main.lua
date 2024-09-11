@@ -13,7 +13,6 @@ local tickSpeed = 1
 local tickCount = 0.0
 
 function love.update(dt)
-
     ui.buttons()
     module.Camera()
     isRunning = ui.controls(isRunning)
@@ -28,7 +27,6 @@ function love.update(dt)
             module.updateCells()
         end
     end
-
 end
 
 function love.draw()
