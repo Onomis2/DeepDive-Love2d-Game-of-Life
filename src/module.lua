@@ -1,16 +1,21 @@
 local module = {}
 local patterns = require("patterns")
 
+local cellSize = 10
+local generation = 0
+local count = 0
+
 cell = {[1] = {[1] = 1}}
 local cellColor = {0, 1, 0}
 local width, height = love.window.getDesktopDimensions()
 local screenSize = {['x'] = width, ['y'] = height}
-local cellSize = 10
 local camera = {pos = {['x'] = 1.5 * cellSize, ['y'] = 1.5 * cellSize}, speed = 25}
+
 local isPlacing = false
 local isRemoving = false
-local generation = 0
 local isGridVisible = true
+
+
 
 local place = love.audio.newSource("sfx/place.wav", "static")
 local remove = love.audio.newSource("sfx/remove.wav", "static")
@@ -52,7 +57,7 @@ function module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu, tickSpeed, tic
     love.graphics.print("SFX: " .. tostring(sfx), 10, height - 180)
     love.graphics.print("isRunning: " .. tostring(isRunning), 10, height - 160)
     love.graphics.print("Generation: " .. generation, 10, height - 140)
-    love.graphics.print("Population: " .. countCells(), 10, height - 120)
+    love.graphics.print("Population: " .. tostring(count), 10, height - 120)
     love.graphics.print("Camera X: " .. camera.pos.x .. ", Camera Y: " .. camera.pos.y, 10, height - 100)
     love.graphics.print(string.format("Zoom Level: %.2fx", cellSize / 10), 10, height - 80)
     love.graphics.print("Camera Speed: " .. camera.speed, 10, height - 60)
@@ -252,8 +257,10 @@ end
 
 function module.updateCells()
     local newCells = {}
+    count = 0
     for x, row in pairs(cell) do
         for y, _ in pairs(row) do
+            count = count + 1
             for dx = -1, 1 do
                 for dy = -1, 1 do
                     local nx, ny = x + dx, y + dy

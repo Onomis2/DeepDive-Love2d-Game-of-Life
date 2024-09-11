@@ -1,27 +1,26 @@
+local module = {}
+
+local height = love.graphics.getHeight()
+local width = love.graphics.getWidth()
+
+local pauseImage = love.graphics.newImage("picture/pause.png")
+local playImage = love.graphics.newImage("picture/play.png")
+local resetImage = love.graphics.newImage("picture/reset.png")
+local gliderGun = love.graphics.newImage("picture/glider-gun.png")
+local glider = love.graphics.newImage("picture/glider.png")
+local flyingShip = love.graphics.newImage("picture/flying-ship.png")
+local pulsar = love.graphics.newImage("picture/pulsar.png")
+local heavyShip = love.graphics.newImage("picture/heavy-ship.png")
+local pulsatingGlider = love.graphics.newImage("picture/pulsating-glider.png")
+local spaceship = love.graphics.newImage("picture/spaceship.png")
+local wheelOfFire = love.graphics.newImage("picture/wheel-of-fire.png")
+
 local debounce = false
-
-function love.load()
-    height = love.graphics.getHeight()
-    width = love.graphics.getWidth()
-
-    pauseImage = love.graphics.newImage("picture/pause.png")
-    playImage = love.graphics.newImage("picture/play.png")
-    resetImage = love.graphics.newImage("picture/reset.png")
-    gliderGun = love.graphics.newImage("picture/glider-gun.png")
-    glider = love.graphics.newImage("picture/glider.png")
-    flyingShip = love.graphics.newImage("picture/flying-ship.png")
-    pulsar = love.graphics.newImage("picture/pulsar.png")
-    heavyShip = love.graphics.newImage("picture/heavy-ship.png")
-    pulsatingGlider = love.graphics.newImage("picture/pulsating-glider.png")
-    spaceship = love.graphics.newImage("picture/spaceship.png")
-    wheelOfFire = love.graphics.newImage("picture/wheel-of-fire.png")
-
-    play = false
-    pause = true
-    UI = false
-    darkened = false
-    darkeningReset = false
-end
+local play = false
+local pause = true
+local UI = false
+local darkened = false
+local darkeningReset = false
 
 function love.update(dt)
     if play == false then
