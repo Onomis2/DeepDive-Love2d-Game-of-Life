@@ -1,6 +1,8 @@
 local module = {}
+local patterns = require("patterns")
 
 cell = {[1] = {[1] = 1}}
+local cellColor = {0, 1, 0}
 local width, height = love.window.getDesktopDimensions()
 local screenSize = {['x'] = width, ['y'] = height}
 local cellSize = 10
@@ -15,6 +17,18 @@ local remove = love.audio.newSource("sfx/remove.wav", "static")
 local select = love.audio.newSource("sfx/select.wav", "static")
 local clear = love.audio.newSource("sfx/clear.wav", "static")
 
+local colors = {
+    {0.1, 1, 0.1}, -- Green
+    {0.2, 0.2, 1}, -- Blue
+    {1, 0.2, 0.2}, -- Red
+    {1, 0.6, 0.2}, -- Orange
+    {1, 1, 0.1}, -- Yellow
+    {0.8, 0.2, 0.8}, -- Purple
+    {0.2, 1, 1}, -- Cyan
+    {1, 1, 1} -- White
+}
+local currentColorIndex = 1
+
 function countCells()
     local count = 0
     for y, row in pairs(cell) do
@@ -27,10 +41,11 @@ function countCells()
     return count
 end
 
-function module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu)
+function module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu, tickSpeed, tickCount)
     love.graphics.setColor(1, 1, 0)
-    love.graphics.print("DEBUG MENU", 10, height - 260)
+    love.graphics.print("DEBUG MENU", 10, height - 280)
     love.graphics.setColor(1, 1, 1)
+    love.graphics.print("Gamespeed: " .. tostring(tickSpeed) .. ", time until cells move: " .. tostring(tickCount), 10, height - 260)
     love.graphics.print("showHelpMenu: " .. tostring(showHelpMenu), 10, height - 240)
     love.graphics.print("isGridVisible: " .. tostring(isGridVisible), 10, height - 220)
     love.graphics.print("Pause on Place: " .. tostring(pauseOnPlace), 10, height - 200)
@@ -47,31 +62,32 @@ end
 
 function module.helpMenu()
     love.graphics.setColor(0.68, 0.85, 0.90)
-    love.graphics.print("HELP MENU", width - 165, height - 380)
+    love.graphics.print("HELP MENU", width - 165, height - 420)
     love.graphics.setColor(1, 1, 1)
     -- Tip
-    love.graphics.print("TIP: Hold M1 to autoplace", width - 165, height - 360)
-    love.graphics.print("and M2 to autoremove", width - 165, height - 340)
+    love.graphics.print("TIP: Hold Mouse 1 to place", width - 165, height - 400)
+    love.graphics.print("and Mouse 2 to remove", width - 165, height - 380)
     -- Movement
-    love.graphics.print("WASD: Move camera pos", width - 165, height - 300)
-    love.graphics.print("Ctrl + WASD: Move slower", width - 165, height - 280)
-    love.graphics.print("Shift + WASD: Move faster", width - 165, height - 260)
-    love.graphics.print("SCROLL: Zoom cam in/out", width - 165, height - 240)
-    love.graphics.print("R: Reset camera pos", width - 165, height - 220)
+    love.graphics.print("WASD: Move camera pos", width - 165, height - 340)
+    love.graphics.print("Ctrl + WASD: Move slower", width - 165, height - 320)
+    love.graphics.print("Shift + WASD: Move faster", width - 165, height - 300)
+    love.graphics.print("SCROLL: Zoom cam in/out", width - 165, height - 280)
+    love.graphics.print("R: Reset camera pos", width - 165, height - 260)
     -- Actions
-    love.graphics.print("M1: Place cells", width - 165, height - 200)
-    love.graphics.print("M2: Delete cells", width - 165, height - 180)
-    love.graphics.print("P: Pause when placing", width - 165, height - 160)
-    love.graphics.print("SPACE: Start/Pause", width - 165, height - 140)
+    love.graphics.print("M1: Place cells", width - 165, height - 240)
+    love.graphics.print("M2: Delete cells", width - 165, height - 220)
+    love.graphics.print("P: Pause when placing", width - 165, height - 200)
+    love.graphics.print("SPACE: Start/Pause", width - 165, height - 180)
+    love.graphics.print("Arrow up/down: Control speed", width - 165, height - 160)
     -- Misc
-    love.graphics.print("C: Clear all cells", width - 165, height - 120)
-    love.graphics.print("G: Hide/Show grid", width - 165, height - 100)
+    love.graphics.print("C: Clear all cells", width - 165, height - 140)
+    love.graphics.print("G: Hide/Show grid", width - 165, height - 120)
+    love.graphics.print("E: Change cell color", width - 165, height - 100)
     love.graphics.print("M: Mute Sfx", width - 165, height - 80)
     love.graphics.print("N: Toggle help menu", width - 165, height - 60)
     love.graphics.print("H: Toggle Debug Menu", width - 165, height - 40)
     love.graphics.print("ESC: Exit game", width - 165, height - 20)
 end
-
 
 function grid()
     if not isGridVisible then return end
@@ -100,7 +116,7 @@ end
 
 function module.DrawTile(x, y)
     if cell[y][x] == 1 then
-        love.graphics.setColor(0, 1, 0) -- Alive cell (green)
+        love.graphics.setColor(cellColor) -- Alive cell (green)
     else
         love.graphics.setColor(0, 0, 0) -- Dead cell (black)
     end
@@ -151,7 +167,7 @@ function module.Camera()
     end
 end
 
-local function placeCell(x, y, sfx)
+function module.placeCell(x, y, sfx)
     local cellX = math.floor((x - (screenSize.x / 2) + camera.pos.x) / cellSize)
     local cellY = math.floor((y - (screenSize.y / 2) + camera.pos.y) / cellSize)
 
@@ -182,7 +198,7 @@ end
 function module.mousepressed(x, y, button, istouch, presses, sfx)
     if button == 1 then
         isPlacing = true
-        placeCell(x, y, sfx)
+        module.placeCell(x, y, sfx)
     elseif button == 2 then
         isRemoving = true
         removeCell(x, y, sfx)
@@ -199,7 +215,7 @@ end
 
 function module.mousemoved(x, y, dx, dy, istouch, sfx)
     if isPlacing then
-        placeCell(x, y, sfx)
+        module.placeCell(x, y, sfx)
     elseif isRemoving then
         removeCell(x, y, sfx)
     end
@@ -211,6 +227,15 @@ end
 
 function module.mute(state)
     sfx = state
+end
+
+function module.cellColor(color)
+    cellColor = color
+end
+
+function module.cycleColor()
+    currentColorIndex = currentColorIndex % #colors + 1
+    module.cellColor(colors[currentColorIndex])
 end
 
 function module.toggleGridVisibility()
@@ -272,6 +297,28 @@ end
 function module.resetCamera()
     camera.pos.x = 1.5 * cellSize
     camera.pos.y = 1.5 * cellSize
+end
+
+function module.placePattern(x, y, pattern, sfx, offsetX, offsetY)
+    for dy, row in ipairs(pattern) do
+        for dx, value in ipairs(row) do
+            if value == 1 then
+                module.placeCell(x + (dx + offsetX) * cellSize, y + (dy + offsetY) * cellSize, sfx)
+            end
+        end
+    end
+end
+
+function module.placeGlider(x, y, sfx)
+    local offsetX = -2
+    local offsetY = -2
+    module.placePattern(x, y, patterns.glider, sfx, offsetX, offsetY)
+end
+
+function module.placeHWSS(x, y, sfx)
+    local offsetX = -4
+    local offsetY = -3
+    module.placePattern(x, y, patterns.hwss, sfx, offsetX, offsetY)
 end
 
 return module
