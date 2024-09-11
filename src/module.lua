@@ -296,10 +296,7 @@ function module.resetCamera()
     camera.pos.y = 1.5 * cellSize
 end
 
-function module.placePattern(x, y, pattern, sfx)
-    local offsetX = -2
-    local offsetY = -2
-
+function module.placePattern(x, y, pattern, sfx, offsetX, offsetY)
     for dy, row in ipairs(pattern) do
         for dx, value in ipairs(row) do
             if value == 1 then
@@ -310,11 +307,15 @@ function module.placePattern(x, y, pattern, sfx)
 end
 
 function module.placeGlider(x, y, sfx)
-    module.placePattern(x, y, patterns.glider, sfx)
+    local offsetX = -2
+    local offsetY = -2
+    module.placePattern(x, y, patterns.glider, sfx, offsetX, offsetY)
 end
 
 function module.placeHWSS(x, y, sfx)
-    module.placePattern(x, y, patterns.hwss, sfx)
+    local offsetX = -4
+    local offsetY = -3
+    module.placePattern(x, y, patterns.hwss, sfx, offsetX, offsetY)
 end
 
 return module
