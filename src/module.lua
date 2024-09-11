@@ -68,7 +68,7 @@ function module.helpMenu()
     love.graphics.print("M2: Delete cells", width - 165, height - 220)
     love.graphics.print("P: Pause when placing", width - 165, height - 200)
     love.graphics.print("SPACE: Start/Pause", width - 165, height - 180)
-    love.graphics.print("PGUP/PGDN: tick speed", width - 165, height - 160)
+    love.graphics.print("Arrow Up/Down: tick speed", width - 165, height - 160)
     -- Misc
     love.graphics.print("C: Clear all cells", width - 165, height - 140)
     love.graphics.print("G: Hide/Show grid", width - 165, height - 120)
@@ -157,9 +157,7 @@ function module.Camera()
     end
 end
 
-function module.placeCell(x, y, sfx)
-    local cellX = math.floor((x - (screenSize.x / 2) + camera.pos.x) / cellSize)
-    local cellY = math.floor((y - (screenSize.y / 2) + camera.pos.y) / cellSize)
+function module.spawnCell(cellX, cellY, sfx)
 
     if not cell[cellY] then
         cell[cellY] = {}
@@ -167,9 +165,34 @@ function module.placeCell(x, y, sfx)
 
     if cell[cellY][cellX] ~= 1 then
         cell[cellY][cellX] = 1
-        if sfx then
-            love.audio.play(place)
-        end
+    end
+
+    if sfx then
+        love.audio.play(place)
+    end
+
+end
+
+function module.placeCell(x, y, sfx, brush)
+    local cellX = math.floor((x - (screenSize.x / 2) + camera.pos.x) / cellSize)
+    local cellY = math.floor((y - (screenSize.y / 2) + camera.pos.y) / cellSize)
+
+    if brush == 1 then
+        module.spawnCell(cellX, cellY, sfx)
+    elseif brush == 2 then
+        module.placeGlider(x, y, sfx, brush)
+    elseif brush == 3 then
+        module.placeHWSS(x, y, sfx, brush)
+    elseif brush == 4 then
+        module.placePulsar(x, y, sfx, brush)
+    elseif brush == 5 then
+        module.placePulsating(x, y, sfx, brush)
+    elseif brush == 6 then
+        module.placeGliderGun(x, y, sfx, brush)
+    elseif brush == 7 then
+        module.placeWheelOfFire(x, y, sfx, brush)
+    elseif brush == 8 then
+        module.placeSpaceship(x, y, sfx, brush)
     end
 end
 
@@ -185,11 +208,11 @@ local function removeCell(x, y, sfx)
     end
 end
 
-function module.mousepressed(x, y, button, istouch, presses, sfx, uiBool)
+function module.mousepressed(x, y, button, istouch, presses, sfx, uiBool, brush)
     if uiBool == false and y > 125 then
         if button == 1 then
             isPlacing = true
-            module.placeCell(x, y, sfx)
+            module.placeCell(x, y, sfx, brush)
         elseif button == 2 then
             isRemoving = true
             removeCell(x, y, sfx)
@@ -197,7 +220,7 @@ function module.mousepressed(x, y, button, istouch, presses, sfx, uiBool)
     elseif uiBool == true then
         if button == 1 then
             isPlacing = true
-            module.placeCell(x, y, sfx)
+            module.placeCell(x, y, sfx, brush)
         elseif button == 2 then
             isRemoving = true
             removeCell(x, y, sfx)
@@ -213,9 +236,9 @@ function module.mousereleased(x, y, button, istouch, presses)
     end
 end
 
-function module.mousemoved(x, y, dx, dy, istouch, sfx)
+function module.mousemoved(x, y, dx, dy, istouch, sfx, brush)
     if isPlacing then
-        module.placeCell(x, y, sfx)
+        module.placeCell(x, y, sfx, brush)
     elseif isRemoving then
         removeCell(x, y, sfx)
     end
@@ -289,7 +312,6 @@ function module.updateCells()
         end
     end
 
-    print("Overwriting current cell grid...")
     cell = newCells
     generation = generation + 1
 end
@@ -299,56 +321,62 @@ function module.resetCamera()
     camera.pos.y = 1.5 * cellSize
 end
 
-function module.placePattern(x, y, pattern, sfx, offsetX, offsetY)
+function module.placePattern(x, y, pattern, sfx, offsetX, offsetY, brush)
+
+    local cellX = math.floor((x - (screenSize.x / 2) + camera.pos.x) / cellSize)
+    local cellY = math.floor((y - (screenSize.y / 2) + camera.pos.y) / cellSize)
+
     for dy, row in ipairs(pattern) do
         for dx, value in ipairs(row) do
-            if value == 1 then
-                module.placeCell(x + (dx + offsetX) * cellSize, y + (dy + offsetY) * cellSize, sfx)
+            if value == 1 then  
+                local finalX = cellX + dx + offsetX
+                local finalY = cellY + dy + offsetY
+                module.spawnCell(finalX, finalY, sfx)
             end
         end
     end
 end
 
-function module.placeGlider(x, y, sfx)
+function module.placeGlider(x, y, sfx, brush)
     local offsetX = -2
     local offsetY = -2
-    module.placePattern(x, y, patterns.glider, sfx, offsetX, offsetY)
+    module.placePattern(x, y, patterns.glider, sfx, offsetX, offsetY, brush)
 end
 
-function module.placeHWSS(x, y, sfx)
+function module.placeHWSS(x, y, sfx, brush)
     local offsetX = -4
     local offsetY = -3
-    module.placePattern(x, y, patterns.hwss, sfx, offsetX, offsetY)
+    module.placePattern(x, y, patterns.hwss, sfx, offsetX, offsetY, brush)
 end
 
-function module.placePulsar(x, y, sfx)
+function module.placePulsar(x, y, sfx, brush)
     local offsetX = -7
     local offsetY = -7
-    module.placePattern(x, y, patterns.pulsar, sfx, offsetX, offsetY)
+    module.placePattern(x, y, patterns.pulsar, sfx, offsetX, offsetY, brush)
 end
 
-function module.placePulsating(x, y, sfx)
+function module.placePulsating(x, y, sfx, brush)
     local offsetX = -4
     local offsetY = -5
-    module.placePattern(x, y, patterns.pulsating, sfx, offsetX, offsetY)
+    module.placePattern(x, y, patterns.pulsating, sfx, offsetX, offsetY, brush)
 end
 
-function module.placeGliderGun(x, y, sfx)
+function module.placeGliderGun(x, y, sfx, brush)
     local offsetX = -4
     local offsetY = -5
-    module.placePattern(x, y, patterns.gliderGun, sfx, offsetX, offsetY)
+    module.placePattern(x, y, patterns.gliderGun, sfx, offsetX, offsetY, brush)
 end
 
-function module.placeWheelOfFire(x, y, sfx)
+function module.placeWheelOfFire(x, y, sfx, brush)
     local offsetX = -4
     local offsetY = -5
-    module.placePattern(x, y, patterns.wheelOfFire, sfx, offsetX, offsetY)
+    module.placePattern(x, y, patterns.wheelOfFire, sfx, offsetX, offsetY, brush)
 end
 
-function module.placeSpaceship(x, y, sfx)
+function module.placeSpaceship(x, y, sfx, brush)
     local offsetX = -4
     local offsetY = -5
-    module.placePattern(x, y, patterns.spaceship, sfx, offsetX, offsetY)
+    module.placePattern(x, y, patterns.spaceship, sfx, offsetX, offsetY, brush)
 end
 
 return module

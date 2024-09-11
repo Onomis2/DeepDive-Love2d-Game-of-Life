@@ -1,7 +1,7 @@
 local module = require("module")
 local ui = require("ui")
 
-cell = {[1] = {[1] = 1}}
+cell = {}
 
 local debug = true
 local isRunning = false
@@ -9,6 +9,7 @@ local sfx = true
 local pauseOnPlace = false
 local showHelpMenu = true
 
+local brush = 1
 local tickSpeed = 1
 local tickCount = 0.0
 
@@ -31,7 +32,7 @@ end
 
 function love.draw()
     module.draw()
-    ui.draw()
+    ui.draw(brush)
 
     if showHelpMenu then
         module.helpMenu()
@@ -51,7 +52,7 @@ function love.mousepressed(x, y, button, istouch, presses)
         module.setRunning(isRunning)
     end
     local uiBool = ui.returnUI()
-    module.mousepressed(x, y, button, istouch, presses, sfx, uiBool)
+    module.mousepressed(x, y, button, istouch, presses, sfx, uiBool, brush)
 end
 
 function love.mousereleased(x, y, button, istouch, presses)
@@ -59,7 +60,7 @@ function love.mousereleased(x, y, button, istouch, presses)
 end
 
 function love.mousemoved(x, y, dx, dy, istouch)
-    module.mousemoved(x, y, dx, dy, istouch, sfx)
+    module.mousemoved(x, y, dx, dy, istouch, sfx, brush)
 end
 
 function love.keypressed(key)
@@ -94,30 +95,8 @@ function love.keypressed(key)
     elseif key == "e" then
         module.cycleColor()
         module.playSFX(sfx, "select")
-    elseif key == "1" then
-        local x, y = love.mouse.getPosition()
-        module.placeCell(x, y, sfx)
-    elseif key == "2" then
-        local x, y = love.mouse.getPosition()
-        module.placeGlider(x, y, sfx)
-    elseif key == "3" then
-        local x, y = love.mouse.getPosition()
-        module.placeHWSS(x, y, sfx)
-    elseif key == "4" then
-        local x, y = love.mouse.getPosition()
-        module.placePulsating(x, y, sfx)
-    elseif key == "5" then
-        local x, y = love.mouse.getPosition()
-        module.placePulsar(x, y, sfx)
-    elseif key == "6" then
-        local x, y = love.mouse.getPosition()
-        module.placeGliderGun(x, y, sfx)
-    elseif key == "7" then
-        local x, y = love.mouse.getPosition()
-        module.placeWheelOfFire(x, y, sfx)
-    elseif key == "8" then
-        local x, y = love.mouse.getPosition()
-        module.placeSpaceship(x, y, sfx)
+    elseif key == "1" or key == "2" or key == "3" or key == "4" or key == "5" or key == "6" or key == "7" or key == "8" then
+        brush = tonumber(key)
     elseif key == "up" then
         if tickSpeed > 1 then
             tickSpeed = tickSpeed + 1
