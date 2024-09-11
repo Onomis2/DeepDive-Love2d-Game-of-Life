@@ -28,6 +28,12 @@ function ui.changePlayPauseButton(running)
     play = not running
 end
 
+function ui.returnUI()
+
+    return UI
+
+end
+
 function ui.buttons()
 
     if play == true then

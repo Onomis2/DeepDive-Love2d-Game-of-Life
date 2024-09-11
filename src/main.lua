@@ -13,7 +13,6 @@ local tickSpeed = 1
 local tickCount = 0.0
 
 function love.update(dt)
-
     ui.buttons()
     module.Camera()
     isRunning = ui.controls(isRunning)
@@ -28,22 +27,18 @@ function love.update(dt)
             module.updateCells()
         end
     end
-
 end
 
 function love.draw()
-
-
     module.draw()
     ui.draw()
 
     if showHelpMenu then
-         module.helpMenu()
+        module.helpMenu()
     end
     if debug then
         module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu, tickSpeed, tickCount)
     end
-
 end
 
 function love.wheelmoved(x, y)
@@ -55,7 +50,8 @@ function love.mousepressed(x, y, button, istouch, presses)
         isRunning = false
         module.setRunning(isRunning)
     end
-    module.mousepressed(x, y, button, istouch, presses, sfx)
+    local uiBool = ui.returnUI()
+    module.mousepressed(x, y, button, istouch, presses, sfx, uiBool)
 end
 
 function love.mousereleased(x, y, button, istouch, presses)
