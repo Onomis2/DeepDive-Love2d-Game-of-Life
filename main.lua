@@ -7,14 +7,14 @@ function love.load()
     pauseImage = love.graphics.newImage("picture/pause.png")
     playImage = love.graphics.newImage("picture/play.png")
     resetImage = love.graphics.newImage("picture/reset.png")
-    gliderGun = love.graphics.newImage("build/glider-gun.png")
-    glider = love.graphics.newImage("build/glider.png")
-    flyingShip = love.graphics.newImage("build/flying-ship.png")
-    pulsar = love.graphics.newImage("build/pulsar.png")
-    heavyShip = love.graphics.newImage("build/heavy-ship.png")
-    pulsatingGlider = love.graphics.newImage("build/pulsating-glider.png")
-    spaceship = love.graphics.newImage("build/spaceship.png")
-    wheelOfFire = love.graphics.newImage("build/wheel-of-fire.png")
+    gliderGun = love.graphics.newImage("picture/glider-gun.png")
+    glider = love.graphics.newImage("picture/glider.png")
+    flyingShip = love.graphics.newImage("picture/flying-ship.png")
+    pulsar = love.graphics.newImage("picture/pulsar.png")
+    heavyShip = love.graphics.newImage("picture/heavy-ship.png")
+    pulsatingGlider = love.graphics.newImage("picture/pulsating-glider.png")
+    spaceship = love.graphics.newImage("picture/spaceship.png")
+    wheelOfFire = love.graphics.newImage("picture/wheel-of-fire.png")
 
     play = false
     pause = true
@@ -39,6 +39,12 @@ end
 
 function love.draw()
     local mouseX, mouseY = love.mouse.getPosition()
+
+
+    if UI == false then
+        love.graphics.setColor(0.2, 0.2, 0.2)
+        love.graphics.rectangle("fill", 0, 0, width, 125)
+    end
 
     if darkened then
         love.graphics.setColor(0.5, 0.5, 0.5)
@@ -94,7 +100,7 @@ function love.draw()
 end
 
 function love.keypressed(key)
-    if key == "f" then
+    if key == "escape" then
         love.event.quit()
     end
 end
