@@ -321,4 +321,23 @@ function module.placeHWSS(x, y, sfx)
     module.placePattern(x, y, patterns.hwss, sfx, offsetX, offsetY)
 end
 
+function module.placePulsar(x, y, sfx)
+    local offsetX = -7
+    local offsetY = -7
+    module.placePattern(x, y, patterns.pulsar, sfx, offsetX, offsetY)
+end
+
+function module.placePulsating(x, y, sfx)
+    local offsetX = -4
+    local offsetY = -5
+    module.placePattern(x, y, patterns.pulsating, sfx, offsetX, offsetY)
+end
+
+function module.placeGliderGun(x, y, sfx)
+    local offsetX = -4
+    local offsetY = -5
+    module.placePattern(x, y, patterns.gliderGun, sfx, offsetX, offsetY)
+end
+
+
 return module

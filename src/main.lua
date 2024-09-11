@@ -91,6 +91,15 @@ function love.keypressed(key)
     elseif key == "3" then
         local x, y = love.mouse.getPosition()
         module.placeHWSS(x, y, sfx)
+    elseif key == "4" then
+        local x, y = love.mouse.getPosition()
+        module.placePulsating(x, y, sfx)
+    elseif key == "5" then
+        local x, y = love.mouse.getPosition()
+        module.placePulsar(x, y, sfx)
+    elseif key == "6" then
+        local x, y = love.mouse.getPosition()
+        module.placeGliderGun(x, y, sfx)
     elseif key == "up" then
         if tickSpeed > 1 then
             tickSpeed = tickSpeed + 1
