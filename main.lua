@@ -42,12 +42,15 @@ function love.draw()
     if UI == false then
         love.graphics.draw(resetImage, width - 175, 50, 0, 0.4, 0.4)
         love.graphics.draw(button, width - 125, 50, 0, 0.4, 0.4)
-        if love.mouse.isDown(1) and not debounce then
-            debounce = true
-            if mouseX >= width - 175 and mouseX <= width - 145 and mouseY >= 50 and mouseY <= 70 then --reset
+    end
+    
+    if love.mouse.isDown(1) and not debounce then
+        debounce = true
+        if UI == false then
+            if mouseX >= width - 175 and mouseX <= width - 145 and mouseY >= 50 and mouseY <= 80 then --reset
                 darkened = true
                 darkeningReset = true
-            elseif mouseX >= width - 125 and mouseX <= width - 95 and mouseY >= 50 and mouseY <= 70 then
+            elseif mouseX >= width - 125 and mouseX <= width - 95 and mouseY >= 50 and mouseY <= 80 then
                 if play == false then --play
                     play = true
                     pause = false
@@ -55,18 +58,19 @@ function love.draw()
                     play = false
                     pause = true
                 end
-            elseif mouseX >= width - 225 and mouseX <= width - 185 and mouseY >= 50 and mouseY <= 60 then --hide UI
-                UI = not UI
             end
-        elseif not love.mouse.isDown(1) then
-            debounce = false
         end
-
-        if darkeningReset and not love.mouse.isDown(1) then
-            love.load()
-            darkened = false
-            darkeningReset = false
+        if mouseX >= width - 225 and mouseX <= width - 185 and mouseY >= 50 and mouseY <= 60 then --hide UI
+            UI = not UI
         end
+    elseif not love.mouse.isDown(1) then
+        debounce = false
+    end
+    
+    if darkeningReset and not love.mouse.isDown(1) then
+        love.load()
+        darkened = false
+        darkeningReset = false
     end
 
     love.graphics.print("Mouse X: " .. mouseX, 10, 10)
