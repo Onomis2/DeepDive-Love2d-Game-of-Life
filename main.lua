@@ -74,7 +74,7 @@ function love.draw()
 end
 
 function love.keypressed(key)
-    if key == "esc" then
+    if key == "f" then
         love.event.quit()
     end
 end
