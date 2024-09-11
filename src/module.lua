@@ -279,11 +279,9 @@ function module.updateCells()
                 newCells[x][y] = nil
             end
         end
-        if next(newCells[x]) == nil then
-            newCells[x] = nil
-        end
     end
 
+    print("Overwriting current cell grid...")
     cell = newCells
     generation = generation + 1
 end
