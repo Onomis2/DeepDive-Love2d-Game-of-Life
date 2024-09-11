@@ -187,13 +187,23 @@ local function removeCell(x, y, sfx)
     end
 end
 
-function module.mousepressed(x, y, button, istouch, presses, sfx)
-    if button == 1 then
-        isPlacing = true
-        module.placeCell(x, y, sfx)
-    elseif button == 2 then
-        isRemoving = true
-        removeCell(x, y, sfx)
+function module.mousepressed(x, y, button, istouch, presses, sfx, uiBool)
+    if uiBool == false and y > 125 then
+        if button == 1 then
+            isPlacing = true
+            module.placeCell(x, y, sfx)
+        elseif button == 2 then
+            isRemoving = true
+            removeCell(x, y, sfx)
+        end
+    elseif uiBool == true then
+        if button == 1 then
+            isPlacing = true
+            module.placeCell(x, y, sfx)
+        elseif button == 2 then
+            isRemoving = true
+            removeCell(x, y, sfx)
+        end
     end
 end
 
