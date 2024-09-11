@@ -79,7 +79,7 @@ function love.keypressed(key)
     elseif key == "n" then
         showHelpMenu = not showHelpMenu
         module.playSFX(sfx, "select")
-    elseif key == "e" and debug then -- its for now only for debug mode
+    elseif key == "e" then
         module.cycleColor()
         module.playSFX(sfx, "select")
     elseif key == "1" then
