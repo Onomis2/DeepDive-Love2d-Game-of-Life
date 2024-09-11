@@ -1,6 +1,8 @@
 local module = {}
+local patterns = require("patterns")
 
 cell = {[1] = {[1] = 1}}
+local cellColor = {0, 1, 0}
 local width, height = love.window.getDesktopDimensions()
 local screenSize = {['x'] = width, ['y'] = height}
 local cellSize = 10
@@ -99,7 +101,7 @@ end
 
 function module.DrawTile(x, y)
     if cell[y][x] == 1 then
-        love.graphics.setColor(0, 1, 0) -- Alive cell (green)
+        love.graphics.setColor(cellColor) -- Alive cell (green)
     else
         love.graphics.setColor(0, 0, 0) -- Dead cell (black)
     end
@@ -212,6 +214,10 @@ function module.mute(state)
     sfx = state
 end
 
+function module.cellColor(color)
+    -- empty
+end
+
 function module.toggleGridVisibility()
     isGridVisible = not isGridVisible
 end
@@ -273,17 +279,11 @@ function module.resetCamera()
     camera.pos.y = 1.5 * cellSize
 end
 
-function module.placeGlider(x, y, sfx)
-    local gliderPattern = {
-        {0, 1, 0},
-        {0, 0, 1},
-        {1, 1, 1}
-    }
-
+function module.placePattern(x, y, pattern, sfx)
     local offsetX = -2
     local offsetY = -2
 
-    for dy, row in ipairs(gliderPattern) do
+    for dy, row in ipairs(pattern) do
         for dx, value in ipairs(row) do
             if value == 1 then
                 module.placeCell(x + (dx + offsetX) * cellSize, y + (dy + offsetY) * cellSize, sfx)
@@ -292,25 +292,12 @@ function module.placeGlider(x, y, sfx)
     end
 end
 
+function module.placeGlider(x, y, sfx)
+    module.placePattern(x, y, patterns.glider, sfx)
+end
+
 function module.placeHWSS(x, y, sfx)
-    local hwssPattern = {
-        {0, 0, 1, 1, 0, 0, 0},
-        {1, 0, 0, 0, 0, 1, 0},
-        {0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 1},
-        {0, 1, 1, 1, 1, 1, 1}
-    }
-
-    local offsetX = -2
-    local offsetY = -2
-
-    for dy, row in ipairs(hwssPattern) do
-        for dx, value in ipairs(row) do
-            if value == 1 then
-                module.placeCell(x + (dx + offsetX) * cellSize, y + (dy + offsetY) * cellSize, sfx)
-            end
-        end
-    end
+    module.placePattern(x, y, patterns.hwss, sfx)
 end
 
 return module
