@@ -62,23 +62,23 @@ function ui.draw()
         love.graphics.draw(resetImage, width - 175, 25, 0, 0.4, 0.4)
         love.graphics.draw(button, width - 125, 25, 0, 0.4, 0.4)
         love.graphics.draw(block, width - 1500, 50, 0, 0.3, 0.3)
-        love.graphics.print("1", width - 1450, 90, 0, 1.5, 1.5)
+        love.graphics.print("1", width - 1450, 90, 0, 1.4, 1.4)
         love.graphics.draw(glider, width - 1425, 42, 0, 0.4, 0.4)
-        love.graphics.print("2", width - 1375, 90, 0)
+        love.graphics.print("2", width - 1375, 90, 0, 1.4, 1.4)
         love.graphics.draw(gliderGun, width - 1300, 40, 0, 0.27, 0.27)
-        love.graphics.print("3", width - 1090, 90, 0)
+        love.graphics.print("3", width - 1090, 90, 0, 1.4, 1.4)
         love.graphics.draw(flyingShip, width - 1010, 25, 0, 0.23, 0.23)
-        love.graphics.print("4", width - 910, 90, 0)
+        love.graphics.print("4", width - 910, 90, 0, 1.4, 1.4)
         love.graphics.draw(pulsar, width - 870, 25, 0, 0.23, 0.23)
-        love.graphics.print("5", width - 800, 90, 0)
+        love.graphics.print("5", width - 800, 90, 0, 1.4, 1.4)
         love.graphics.draw(heavyShip, width - 775, 50, 0, 0.3, 0.3)
-        love.graphics.print("6", width - 725, 90, 0)
+        love.graphics.print("6", width - 725, 90, 0, 1.4, 1.4)
         love.graphics.draw(pulsatingGlider, width - 700, 25, 0, 0.23, 0.23)
-        love.graphics.print("7", width - 660, 90, 0)
+        love.graphics.print("7", width - 660, 90, 0, 1.4, 1.4)
         love.graphics.draw(spaceship, width - 625, 15, 0, 0.23, 0.23)
-        love.graphics.print("8", width - 525, 90, 0)
+        love.graphics.print("8", width - 525, 90, 0, 1.4, 1.4)
         love.graphics.draw(wheelOfFire, width - 500, 20, 0, 0.23, 0.23)
-        love.graphics.print("9", width - 435, 90, 0)
+        love.graphics.print("9", width - 435, 90, 0, 1.4, 1.4)
     end
 
 end
@@ -89,10 +89,10 @@ function ui.controls(isRunning)
     if love.mouse.isDown(1) and not debounce then
         debounce = true
         if UI == false then
-            if mouseX >= width - 175 and mouseX <= width - 145 and mouseY >= 23 and mouseY <= 55 then --reset
+            if mouseX >= width - 175 and mouseX <= width - 145 and mouseY >= 23 and mouseY <= 60 then --reset
                 darkened = true
                 darkeningReset = true
-            elseif mouseX >= width - 125 and mouseX <= width - 95 and mouseY >= 23 and mouseY <= 55 then
+            elseif mouseX >= width - 125 and mouseX <= width - 95 and mouseY >= 23 and mouseY <= 60 then
                 if play == false then --play
                     play = true
                     isRunning = true
