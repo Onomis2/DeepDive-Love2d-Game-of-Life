@@ -32,18 +32,15 @@ function love.update(dt)
 end
 
 function love.draw()
-
-
     module.draw()
     ui.draw()
 
     if showHelpMenu then
-         module.helpMenu()
+        module.helpMenu()
     end
     if debug then
         module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu, tickSpeed, tickCount)
     end
-
 end
 
 function love.wheelmoved(x, y)

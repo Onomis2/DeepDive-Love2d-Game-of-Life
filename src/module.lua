@@ -14,8 +14,6 @@ local isPlacing = false
 local isRemoving = false
 local isGridVisible = true
 
-
-
 local place = love.audio.newSource("sfx/place.wav", "static")
 local remove = love.audio.newSource("sfx/remove.wav", "static")
 local select = love.audio.newSource("sfx/select.wav", "static")
@@ -70,7 +68,7 @@ function module.helpMenu()
     love.graphics.print("M2: Delete cells", width - 165, height - 220)
     love.graphics.print("P: Pause when placing", width - 165, height - 200)
     love.graphics.print("SPACE: Start/Pause", width - 165, height - 180)
-    love.graphics.print("Arrow up/down: Control speed", width - 165, height - 160)
+    love.graphics.print("PGUP/PGDN: tick speed", width - 165, height - 160)
     -- Misc
     love.graphics.print("C: Clear all cells", width - 165, height - 140)
     love.graphics.print("G: Hide/Show grid", width - 165, height - 120)
