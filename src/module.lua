@@ -72,7 +72,6 @@ function module.helpMenu()
     love.graphics.print("ESC: Exit game", width - 165, height - 20)
 end
 
-
 function grid()
     if not isGridVisible then return end
     love.graphics.setColor(0.1, 0.1, 0.1)
@@ -151,7 +150,7 @@ function module.Camera()
     end
 end
 
-local function placeCell(x, y, sfx)
+function module.placeCell(x, y, sfx)
     local cellX = math.floor((x - (screenSize.x / 2) + camera.pos.x) / cellSize)
     local cellY = math.floor((y - (screenSize.y / 2) + camera.pos.y) / cellSize)
 
@@ -182,7 +181,7 @@ end
 function module.mousepressed(x, y, button, istouch, presses, sfx)
     if button == 1 then
         isPlacing = true
-        placeCell(x, y, sfx)
+        module.placeCell(x, y, sfx)
     elseif button == 2 then
         isRemoving = true
         removeCell(x, y, sfx)
@@ -199,7 +198,7 @@ end
 
 function module.mousemoved(x, y, dx, dy, istouch, sfx)
     if isPlacing then
-        placeCell(x, y, sfx)
+        module.placeCell(x, y, sfx)
     elseif isRemoving then
         removeCell(x, y, sfx)
     end
@@ -272,6 +271,46 @@ end
 function module.resetCamera()
     camera.pos.x = 1.5 * cellSize
     camera.pos.y = 1.5 * cellSize
+end
+
+function module.placeGlider(x, y, sfx)
+    local gliderPattern = {
+        {0, 1, 0},
+        {0, 0, 1},
+        {1, 1, 1}
+    }
+
+    local offsetX = -2
+    local offsetY = -2
+
+    for dy, row in ipairs(gliderPattern) do
+        for dx, value in ipairs(row) do
+            if value == 1 then
+                module.placeCell(x + (dx + offsetX) * cellSize, y + (dy + offsetY) * cellSize, sfx)
+            end
+        end
+    end
+end
+
+function module.placeHWSS(x, y, sfx)
+    local hwssPattern = {
+        {0, 0, 1, 1, 0, 0, 0},
+        {1, 0, 0, 0, 0, 1, 0},
+        {0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 1},
+        {0, 1, 1, 1, 1, 1, 1}
+    }
+
+    local offsetX = -2
+    local offsetY = -2
+
+    for dy, row in ipairs(hwssPattern) do
+        for dx, value in ipairs(row) do
+            if value == 1 then
+                module.placeCell(x + (dx + offsetX) * cellSize, y + (dy + offsetY) * cellSize, sfx)
+            end
+        end
+    end
 end
 
 return module
