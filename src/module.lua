@@ -117,7 +117,7 @@ function module.DrawTile(x, y)
     if cell[y][x] == 1 and rainbow == false then
         love.graphics.setColor(cellColor) -- Alive cell (green)
     elseif cell[y][x] == 1 and rainbow == true then
-        love.graphics.setColor(math.random(0.1, 1), math.random(0.1, 1), math.random(0.1, 1))
+        love.graphics.setColor(math.random(0.01, 1), math.random(0.01, 1), math.random(0.01, 1))
     else
         love.graphics.setColor(0, 0, 0) -- Dead cell (black)
     end
