@@ -1,55 +1,46 @@
-# Readme Game Of Life
+# Game of Life
 
-#### Dit project heet 'Game of Life'. In deze game kan je cells plaatsen die vervolgens met de regels weer verwijderd of toegevoegd worden. Zo komen er verschillende patronen.
+### Overview
 
-### Authors 
-##### [Simon][https://github.com/Onomis2]
-##### [Ryan][https://github.com/WElpAztech]
-##### [Joshua][https://github.com/JoshuaKool]
-##### [Sytske][https://github.com/Sytske060]
+This project is our group's interpretation of John Conway's Game of Life, developed during our deepdive week. We chose to use the LÖVE 2D game engine for this project. While the core mechanics remain true to Conway's original ruleset, we added several features to enhance the experience, including sound effects, a toolbar with prefabs, speed controls, and a camera for navigating the infinite grid.
 
-## Commands
+### Features
 
-#### function module.helpMenu()
-#### love.graphics.setColor(0.68, 0.85, 0.90)
-#### love.graphics.print("HELP MENU", width - 165, height - 380)
-#### love.graphics.setColor(1, 1, 1)
+- **Game of Life Ruleset**
+- **Infinite Grid**
+- **Prefabs**
+- **placable and removable cells**
+- **Pause/Play Functionality**
+- **Speed Controls**
+- **Information Logging**
+- **Customizable Colors**
 
+### Download Instructions
 
+1. Visit the [Releases](https://github.com/your-repo/releases) section of the repository.
+2. Download the latest release for your operating system.
 
-##  -- Tip
+### Controls
 
-#### love.graphics.print("TIP: Hold M1 to autoplace", width - 165, height - 360)
-#### love.graphics.print("and M2 to autoremove", width - 165, height - 340)
+- **`M1`:** Spawn cell or prefab
+- **`M2`:** Remove cell
+- **`1 - 9`:** Select prefabs
+- **`p`:** Toggle pause on place
+- **`space`:** Pause/play the simulation
+- **`up` and `down`:** Control simulation speed
+- **`c`:** Clear all cells
+- **`m`:** Mute/unmute sound effects
+- **`t`:** Reset the camera
+- **`g`:** Toggle grid visibility
+- **`e`:** Cycle through cell colors
+- **`b`:** Cycle through background colors
+- **`n`:** Toggle help menu
+- **`h`:** Toggle debug mode
+- **`escape`:** Quit the game
 
+### Authors
 
-
-## -- Movement
-#### love.graphics.print("WASD: Move camera pos", width - 165, height - 300)
-#### love.graphics.print("Ctrl + WASD: Move slower", width - 165, height - 280)
-#### love.graphics.print("Shift + WASD: Move faster", width - 165, height - 260)
-#### love.graphics.print("SCROLL: Zoom cam in/out", width - 165, height - 240)
-#### love.graphics.print("R: Reset camera pos", width - 165, height - 220)
-
-
-
-## -- Actions
-
-#### love.graphics.print("M1: Place cells", width - 165, height - 200)
-#### love.graphics.print("M2: Delete cells", width - 165, height - 180)
-#### love.graphics.print("P: Pause when placing", width - 165, height - 160)
-#### love.graphics.print("SPACE: Start/Pause", width - 165, height - 140)
-
-
-
-## -- Misc
-
-#### love.graphics.print("C: Clear all cells", width - 165, height - 120)
-#### love.graphics.print("G: Hide/Show grid", width - 165, height - 100)
-#### love.graphics.print("M: Mute Sfx", width - 165, height - 80)
-#### love.graphics.print("N: Toggle help menu", width - 165, height - 60)
-#### love.graphics.print("H: Toggle Debug Menu", width - 165, height - 40)
-#### love.graphics.print("ESC: Exit game", width - 165, height - 20)
-## end
-
-
+- [Simon](https://github.com/Onomis2)
+- [Ryan](https://github.com/WElpAztech)
+- [Joshua](https://github.com/JoshuaKool)
+- [Sytske](https://github.com/Sytske060)
