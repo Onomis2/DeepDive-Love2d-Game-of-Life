@@ -94,6 +94,9 @@ function love.keypressed(key)
     elseif key == "m" then
         sfx = not sfx
         module.mute(sfx)
+    elseif key == "r" then
+        module.rotate()
+        module.playSFX(sfx, "random")
     elseif key == "t" then
         module.resetCamera()
         module.playSFX(sfx, "select")
