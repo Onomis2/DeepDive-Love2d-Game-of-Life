@@ -1,6 +1,6 @@
 module = require("module")
 local ui = {}
-local brushText = {[1] = "single", [2] = "glider", [3] = "Heavy Ship", [4] = "Pulsar", [5] = "Pulsating", [6] = "Glider gun", [7] = "Wheel of fire", [8] = "Space ship"}
+local brushText = {[1] = "single", [2] = "glider", [3] = "Glider gun", [4] = "Flying ship", [5] = "Pulsar", [6] = "HWSS", [7] = "Pulsating glider", [8] = "Space ship", [9] = "Wheel of fire"}
 
 local height = love.graphics.getHeight()
 local width = love.graphics.getWidth()
