@@ -182,17 +182,19 @@ function module.placeCell(x, y, sfx, brush)
     elseif brush == 2 then
         module.placeGlider(x, y, sfx, brush)
     elseif brush == 3 then
-        module.placeHWSS(x, y, sfx, brush)
-    elseif brush == 4 then
-        module.placePulsar(x, y, sfx, brush)
-    elseif brush == 5 then
-        module.placePulsating(x, y, sfx, brush)
-    elseif brush == 6 then
         module.placeGliderGun(x, y, sfx, brush)
+    elseif brush == 4 then
+        --Flying ship
+    elseif brush == 5 then
+        module.placePulsar(x, y, sfx, brush)
+    elseif brush == 6 then
+        module.placeHWSS(x, y, sfx, brush)
     elseif brush == 7 then
-        module.placeWheelOfFire(x, y, sfx, brush)
+        module.placePulsating(x, y, sfx, brush)
     elseif brush == 8 then
         module.placeSpaceship(x, y, sfx, brush)
+    elseif brush == 9 then
+        module.placeWheelOfFire(x, y, sfx, brush)
     end
 end
 
@@ -216,6 +218,26 @@ function module.mousepressed(x, y, button, istouch, presses, sfx, uiBool, brush)
         elseif button == 2 then
             isRemoving = true
             removeCell(x, y, sfx)
+        end
+    elseif uiBool == false and y <= 125 then
+        if x <= 100 then
+            setBrush(1)
+        elseif x > 100 and x <= 200 then
+            setBrush(2)
+        elseif x > 200 and x <= 500 then
+            setBrush(3)
+        elseif x > 500 and x <= 650 then
+            setBrush(4)
+        elseif x > 650 and x <= 750 then
+            setBrush(5)
+        elseif x > 750 and x <= 830 then
+            setBrush(6)
+        elseif x > 750 and x <= 900 then
+            setBrush(7)
+        elseif x > 900 and x <= 1030 then
+            setBrush(8)
+        elseif x > 1030 and x <= 1120 then
+            setBrush(9)
         end
     elseif uiBool == true then
         if button == 1 then
