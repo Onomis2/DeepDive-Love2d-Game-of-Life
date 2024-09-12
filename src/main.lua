@@ -4,14 +4,14 @@ local ui = require("ui")
 cell = {}
 local colors = {
     {0, 0, 0}, -- Black
-    {0.1, 1, 0.1}, -- Green
-    {0.2, 0.2, 1}, -- Blue
-    {1, 0.2, 0.2}, -- Red
-    {1, 0.6, 0.2}, -- Orange
-    {1, 1, 0.1}, -- Yellow
-    {0.8, 0.2, 0.8}, -- Purple
-    {0.2, 1, 1}, -- Cyan
-    {1, 1, 1} -- White
+    {0.05, 0.5, 0.05}, -- Dark Green
+    {0.1, 0.1, 0.5}, -- Dark Blue
+    {0.5, 0.1, 0.1}, -- Dark Red
+    {0.5, 0.3, 0.1}, -- Dark Orange
+    {0.5, 0.5, 0.05}, -- Dark Yellow
+    {0.4, 0.1, 0.4}, -- Dark Purple
+    {0.1, 0.5, 0.5}, -- Dark Cyan
+    {0.5, 0.5, 0.5} -- Dark White (Gray)
 }
 
 local debug = true
@@ -94,7 +94,7 @@ function love.keypressed(key)
     elseif key == "m" then
         sfx = not sfx
         module.mute(sfx)
-    elseif key == "r" then
+    elseif key == "t" then
         module.resetCamera()
         module.playSFX(sfx, "select")
     elseif key == "p" then
