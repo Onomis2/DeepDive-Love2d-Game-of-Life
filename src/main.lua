@@ -6,6 +6,21 @@ local sfx = true
 local pauseOnPlace = false
 local showHelpMenu = true
 
+-- Kleurenset voor de achtergrond
+local colors = {
+    {0.1, 1, 0.1}, -- Groen
+    {0.2, 0.2, 1}, -- Blauw
+    {1, 0.2, 0.2}, -- Rood
+    {1, 0.6, 0.2}, -- Oranje
+    {1, 1, 0.1}, -- Geel
+    {0.8, 0.2, 0.8}, -- Paars
+    {0.2, 1, 1}, -- Cyaan
+    {1, 1, 1}, -- Wit
+    {0, 0, 0} -- zwart
+}
+
+local standaardColorIndex = 1 -- Standaard kleurindex voor de achtergrond
+
 function love.update(dt)
     module.Camera()
     if isRunning then
@@ -14,6 +29,10 @@ function love.update(dt)
 end
 
 function love.draw()
+    -- Stel de achtergrondkleur in op basis van de huidige kleur
+    love.graphics.clear(colors[standaardColorIndex])
+
+    -- Teken de rest van de elementen
     module.draw()
     if showHelpMenu then module.helpMenu() end
     if debug then module.debug(isRunning, sfx, pauseOnPlace, showHelpMenu) end
@@ -67,5 +86,7 @@ function love.keypressed(key)
     elseif key == "n" then
         showHelpMenu = not showHelpMenu
         module.playSFX(sfx, "select")
+    elseif key == "b" then
+        standaardColorIndex = standaardColorIndex % #colors + 1
     end
 end
