@@ -182,17 +182,19 @@ function module.placeCell(x, y, sfx, brush)
     elseif brush == 2 then
         module.placeGlider(x, y, sfx, brush)
     elseif brush == 3 then
-        module.placeHWSS(x, y, sfx, brush)
-    elseif brush == 4 then
-        module.placePulsar(x, y, sfx, brush)
-    elseif brush == 5 then
-        module.placePulsating(x, y, sfx, brush)
-    elseif brush == 6 then
         module.placeGliderGun(x, y, sfx, brush)
+    elseif brush == 4 then
+        -- module.placePulsar(x, y, sfx, brush)
+    elseif brush == 5 then
+        module.placePulsar(x, y, sfx, brush)
+    elseif brush == 6 then
+        module.placeHWSS(x, y, sfx, brush)
     elseif brush == 7 then
-        module.placeWheelOfFire(x, y, sfx, brush)
+        module.placePulsating(x, y, sfx, brush)
     elseif brush == 8 then
         module.placeSpaceship(x, y, sfx, brush)
+    elseif brush == 9 then
+        module.placeWheelOfFire(x, y, sfx, brush)
     end
 end
 
