@@ -387,16 +387,16 @@ function module.placeGlider(x, y, sfx, brush)
 end
 
 function module.placeGliderGun(x, y, sfx, brush)
-    local offsetX = -4
-    local offsetY = -5
+    local offsetX = -19
+    local offsetY = -6
     local patternKey = "gliderGun_" .. rotate
     local pattern = patterns[patternKey]
     module.placePattern(x, y, pattern, sfx, offsetX, offsetY, brush)
 end
 
 function module.placeFlyingship(x, y, sfx, brush)
-    local offsetX = -4
-    local offsetY = -5
+    local offsetX = -10
+    local offsetY = -7
     local patternKey = "flyingship_" .. rotate
     local pattern = patterns[patternKey]
     module.placePattern(x, y, pattern, sfx, offsetX, offsetY, brush)
@@ -427,16 +427,16 @@ function module.placePulsating(x, y, sfx, brush)
 end
 
 function module.placeSpaceship(x, y, sfx, brush)
-    local offsetX = -4
-    local offsetY = -5
+    local offsetX = -10
+    local offsetY = -9
     local patternKey = "spaceship_" .. rotate
     local pattern = patterns[patternKey]
     module.placePattern(x, y, pattern, sfx, offsetX, offsetY, brush)
 end
 
 function module.placeWheelOfFire(x, y, sfx, brush)
-    local offsetX = -4
-    local offsetY = -5
+    local offsetX = -6
+    local offsetY = -6
     local patternKey = "wheelOfFire_" .. rotate
     local pattern = patterns[patternKey]
     module.placePattern(x, y, pattern, sfx, offsetX, offsetY, brush)
