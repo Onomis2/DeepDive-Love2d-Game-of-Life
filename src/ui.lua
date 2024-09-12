@@ -24,14 +24,27 @@ local UI = false
 local darkened = false
 local darkeningReset = false
 
+local rotation = 1
+
 function ui.changePlayPauseButton(running)
 
     play = not running
+
 end
 
 function ui.returnUI()
 
     return UI
+
+end
+
+function ui.setrotation()
+
+    if rotation == 4 then
+        rotation = 1
+    else
+        rotation = rotation + 1
+    end
 
 end
 
@@ -54,6 +67,7 @@ end
 function ui.draw(brush)
 
     local mouseX, mouseY = love.mouse.getPosition()
+    local arrow = ""
     
     if UI == false then
         love.graphics.setColor(0.2, 0.2, 0.2, 0.5)
@@ -66,8 +80,18 @@ function ui.draw(brush)
         love.graphics.setColor(1, 1, 1)
     end
 
+    if rotation == 1 then
+        arrow = "<"
+    elseif rotation == 2 then
+        arrow = "/\\"
+    elseif rotation == 3 then
+        arrow = ">"
+    elseif rotation == 4 then
+        arrow = "\\/"
+    end
+
     --love.graphics.print("MouseX: " .. tostring(mouseX) .. ",MouseY:" .. tostring(mouseY), mouseX - 15, mouseY - 15)
-    love.graphics.print(brushText[brush], mouseX + 15, mouseY + 15)
+    love.graphics.print(arrow .. brushText[brush], mouseX + 15, mouseY + 15)
     love.graphics.print(hide, width - 225, 35)
     if UI == false then
         love.graphics.draw(resetImage, width - 175, 25, 0, 0.4, 0.4)

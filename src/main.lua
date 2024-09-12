@@ -95,6 +95,7 @@ function love.keypressed(key)
         sfx = not sfx
         module.mute(sfx)
     elseif key == "r" then
+        ui.setrotation()
         module.rotate()
         module.playSFX(sfx, "random")
     elseif key == "t" then
@@ -115,12 +116,12 @@ function love.keypressed(key)
     elseif key == "1" or key == "2" or key == "3" or key == "4" or key == "5" or key == "6" or key == "7" or key == "8" or key == "9" then
         brush = tonumber(key)
     elseif key == "up" then
-        if tickSpeed > 1 then
+        if tickSpeed > 1 and tickSpeed <= 20 then
             tickSpeed = tickSpeed + 1
         else
             tickSpeed = tickSpeed * 2
         end
-    elseif key == "down" then
+    elseif key == "down" and tickSpeed >= 0.001 then
         if tickSpeed > 1 then
             tickSpeed = tickSpeed - 1
         else
