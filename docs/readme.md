@@ -2,7 +2,14 @@
 
 ### Overview
 
-This project is our group's interpretation of John Conway's Game of Life, developed during our deepdive week. We chose to use the LÖVE 2D game engine for this project. While the core mechanics remain true to Conway's original ruleset, we added several features to enhance the experience, including sound effects, a toolbar with prefabs, speed controls, and a camera for navigating the infinite grid.
+This project is our group's remake of John Conway's Game of Life. We chose to use the love2d game engine for our project. The game works like John's Game of Life is supposed to work but we added some features like sound effects when placing or removing cells, a toolbar where you can select prefabs, speed control and even camera and zoom control to navigate the infinite grid.
+
+![Screenshot of Game of Life](../docs/images/preview.png)
+
+### Download Instructions
+
+1. Visit the [Releases](https://github.com/your-repo/releases) section of the repository.
+2. Download the latest release for your operating system.
 
 ### Features
 
@@ -14,11 +21,6 @@ This project is our group's interpretation of John Conway's Game of Life, develo
 - **Speed Controls**
 - **Information Logging**
 - **Customizable Colors**
-
-### Download Instructions
-
-1. Visit the [Releases](https://github.com/your-repo/releases) section of the repository.
-2. Download the latest release for your operating system.
 
 ### Controls
 
