@@ -4,6 +4,9 @@ local patterns = require("patterns")
 local cellSize = 10
 local generation = 0
 local count = 0
+local deathCondition = 3
+local liveUpper = 3
+local liveLower = 2
 
 local cellColor = {0, 1, 0}
 local width, height = love.window.getDesktopDimensions()
@@ -337,9 +340,9 @@ function module.updateCells()
                     end
 
                     if cell[nx] and cell[nx][ny] == 1 then
-                        newCells[nx][ny] = (population == 2 or population == 3) and 1 or 0
+                        newCells[nx][ny] = (population >= liveLower and population <= liveUpper) and 1 or 0
                     else
-                        newCells[nx][ny] = (population == 3) and 1 or 0
+                        newCells[nx][ny] = (population == deathCondition) and 1 or 0
                     end
                 end
             end
