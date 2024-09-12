@@ -184,7 +184,7 @@ function module.placeCell(x, y, sfx, brush)
     elseif brush == 3 then
         module.placeGliderGun(x, y, sfx, brush)
     elseif brush == 4 then
-        -- module.placePulsar(x, y, sfx, brush)
+        module.placeFlyingship(x, y, sfx, brush)
     elseif brush == 5 then
         module.placePulsar(x, y, sfx, brush)
     elseif brush == 6 then
@@ -365,10 +365,16 @@ function module.placeGlider(x, y, sfx, brush)
     module.placePattern(x, y, patterns.glider, sfx, offsetX, offsetY, brush)
 end
 
-function module.placeHWSS(x, y, sfx, brush)
+function module.placeGliderGun(x, y, sfx, brush)
     local offsetX = -4
-    local offsetY = -3
-    module.placePattern(x, y, patterns.hwss, sfx, offsetX, offsetY, brush)
+    local offsetY = -5
+    module.placePattern(x, y, patterns.gliderGun, sfx, offsetX, offsetY, brush)
+end
+
+function module.placeFlyingship(x, y, sfx, brush)
+    local offsetX = -4
+    local offsetY = -5
+    module.placePattern(x, y, patterns.flyingship_1, sfx, offsetX, offsetY, brush)
 end
 
 function module.placePulsar(x, y, sfx, brush)
@@ -377,28 +383,28 @@ function module.placePulsar(x, y, sfx, brush)
     module.placePattern(x, y, patterns.pulsar, sfx, offsetX, offsetY, brush)
 end
 
+function module.placeHWSS(x, y, sfx, brush)
+    local offsetX = -4
+    local offsetY = -3
+    module.placePattern(x, y, patterns.hwss, sfx, offsetX, offsetY, brush)
+end
+
 function module.placePulsating(x, y, sfx, brush)
     local offsetX = -4
     local offsetY = -5
     module.placePattern(x, y, patterns.pulsating, sfx, offsetX, offsetY, brush)
 end
 
-function module.placeGliderGun(x, y, sfx, brush)
+function module.placeSpaceship(x, y, sfx, brush)
     local offsetX = -4
     local offsetY = -5
-    module.placePattern(x, y, patterns.gliderGun, sfx, offsetX, offsetY, brush)
+    module.placePattern(x, y, patterns.spaceship, sfx, offsetX, offsetY, brush)
 end
 
 function module.placeWheelOfFire(x, y, sfx, brush)
     local offsetX = -4
     local offsetY = -5
     module.placePattern(x, y, patterns.wheelOfFire, sfx, offsetX, offsetY, brush)
-end
-
-function module.placeSpaceship(x, y, sfx, brush)
-    local offsetX = -4
-    local offsetY = -5
-    module.placePattern(x, y, patterns.spaceship, sfx, offsetX, offsetY, brush)
 end
 
 return module
