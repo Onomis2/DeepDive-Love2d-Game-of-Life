@@ -1,5 +1,6 @@
 module = require("module")
 local ui = {}
+local brushText = {[1] = "single", [2] = "glider", [3] = "Heavy Ship", [4] = "Pulsar", [5] = "Pulsating", [6] = "Glider gun", [7] = "Wheel of fire", [8] = "Space ship"}
 
 local height = love.graphics.getHeight()
 local width = love.graphics.getWidth()
@@ -50,8 +51,10 @@ function ui.buttons()
 
 end
 
-function ui.draw()
+function ui.draw(brush)
 
+    local mouseX, mouseY = love.mouse.getPosition()
+    
     if UI == false then
         love.graphics.setColor(0.2, 0.2, 0.2, 0.5)
         love.graphics.rectangle("fill", 0, 0, width, 125)
@@ -63,6 +66,7 @@ function ui.draw()
         love.graphics.setColor(1, 1, 1)
     end
 
+    love.graphics.print(brushText[brush], mouseX + 15, mouseY + 15)
     love.graphics.print(hide, width - 225, 35)
     if UI == false then
         love.graphics.draw(resetImage, width - 175, 25, 0, 0.4, 0.4)
