@@ -8,6 +8,7 @@ local showHelpMenu = true
 
 -- Kleurenset voor de achtergrond
 local colors = {
+    {0, 0, 0}, -- zwart
     {0.1, 1, 0.1}, -- Groen
     {0.2, 0.2, 1}, -- Blauw
     {1, 0.2, 0.2}, -- Rood
@@ -15,8 +16,7 @@ local colors = {
     {1, 1, 0.1}, -- Geel
     {0.8, 0.2, 0.8}, -- Paars
     {0.2, 1, 1}, -- Cyaan
-    {1, 1, 1}, -- Wit
-    {0, 0, 0} -- zwart
+    {1, 1, 1} -- Wit
 }
 
 local standaardColorIndex = 1 -- Standaard kleurindex voor de achtergrond
