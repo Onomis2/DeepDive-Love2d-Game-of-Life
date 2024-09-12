@@ -125,6 +125,8 @@ function love.keypressed(key)
         end
     elseif key == "b" then
         standardColorIndex = standardColorIndex % #colors + 1
+    elseif key == "0" then
+        module.rainbowMode()
     end
 end
 
