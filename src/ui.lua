@@ -81,13 +81,13 @@ function ui.draw(brush)
     end
 
     if rotation == 1 then
-        arrow = "<"
+        arrow = "< "
     elseif rotation == 2 then
-        arrow = "/\\"
+        arrow = "/\\ "
     elseif rotation == 3 then
-        arrow = ">"
+        arrow = "> "
     elseif rotation == 4 then
-        arrow = "\\/"
+        arrow = "\\/ "
     end
 
     --love.graphics.print("MouseX: " .. tostring(mouseX) .. ",MouseY:" .. tostring(mouseY), mouseX - 15, mouseY - 15)
