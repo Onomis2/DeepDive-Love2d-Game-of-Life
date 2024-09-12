@@ -2,6 +2,17 @@ local module = require("module")
 local ui = require("ui")
 
 cell = {}
+local colors = {
+    {0, 0, 0}, -- Black
+    {0.1, 1, 0.1}, -- Green
+    {0.2, 0.2, 1}, -- Blue
+    {1, 0.2, 0.2}, -- Red
+    {1, 0.6, 0.2}, -- Orange
+    {1, 1, 0.1}, -- Yellow
+    {0.8, 0.2, 0.8}, -- Purple
+    {0.2, 1, 1}, -- Cyan
+    {1, 1, 1} -- White
+}
 
 local debug = true
 local isRunning = false
@@ -12,21 +23,7 @@ local showHelpMenu = true
 local brush = 1
 local tickSpeed = 1
 local tickCount = 0.0
-
--- Kleurenset voor de achtergrond
-local colors = {
-    {0, 0, 0}, -- zwart
-    {0.1, 1, 0.1}, -- Groen
-    {0.2, 0.2, 1}, -- Blauw
-    {1, 0.2, 0.2}, -- Rood
-    {1, 0.6, 0.2}, -- Oranje
-    {1, 1, 0.1}, -- Geel
-    {0.8, 0.2, 0.8}, -- Paars
-    {0.2, 1, 1}, -- Cyaan
-    {1, 1, 1} -- Wit
-}
-
-local standaardColorIndex = 1 -- Standaard kleurindex voor de achtergrond
+local standardColorIndex = 1
 
 function love.update(dt)
     ui.buttons()
@@ -46,10 +43,8 @@ function love.update(dt)
 end
 
 function love.draw()
-    -- Stel de achtergrondkleur in op basis van de huidige kleur
-    love.graphics.clear(colors[standaardColorIndex])
+    love.graphics.clear(colors[standardColorIndex])
 
-    -- Teken de rest van de elementen
     module.draw()
     ui.draw(brush)
 
@@ -129,7 +124,7 @@ function love.keypressed(key)
             tickSpeed = tickSpeed / 2
         end
     elseif key == "b" then
-        standaardColorIndex = standaardColorIndex % #colors + 1
+        standardColorIndex = standardColorIndex % #colors + 1
     end
 end
 
