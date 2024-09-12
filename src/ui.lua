@@ -66,7 +66,7 @@ function ui.draw(brush)
         love.graphics.setColor(1, 1, 1)
     end
 
-    love.graphics.print("MouseX: " .. tostring(mouseX) .. ",MouseY:" .. tostring(mouseY), mouseX - 15, mouseY - 15)
+    --love.graphics.print("MouseX: " .. tostring(mouseX) .. ",MouseY:" .. tostring(mouseY), mouseX - 15, mouseY - 15)
     love.graphics.print(brushText[brush], mouseX + 15, mouseY + 15)
     love.graphics.print(hide, width - 225, 35)
     if UI == false then
