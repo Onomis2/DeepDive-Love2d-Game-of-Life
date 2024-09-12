@@ -14,6 +14,7 @@ local isPlacing = false
 local isRemoving = false
 local isGridVisible = true
 local rainbow = false
+local rotate = 1
 
 local place = love.audio.newSource("sfx/place.wav", "static")
 local remove = love.audio.newSource("sfx/remove.wav", "static")
@@ -294,6 +295,14 @@ function module.cycleColor()
     module.cellColor(colors[currentColorIndex])
 end
 
+function module.rotate()
+    if rotate == 4 then
+        rotate = 1
+    else
+        rotate = rotate + 1
+    end
+end
+
 function module.toggleGridVisibility()
     isGridVisible = not isGridVisible
 end
@@ -355,7 +364,6 @@ function module.resetCamera()
 end
 
 function module.placePattern(x, y, pattern, sfx, offsetX, offsetY, brush)
-
     local cellX = math.floor((x - (screenSize.x / 2) + camera.pos.x) / cellSize)
     local cellY = math.floor((y - (screenSize.y / 2) + camera.pos.y) / cellSize)
 
@@ -373,49 +381,65 @@ end
 function module.placeGlider(x, y, sfx, brush)
     local offsetX = -2
     local offsetY = -2
-    module.placePattern(x, y, patterns.glider, sfx, offsetX, offsetY, brush)
+    local patternKey = "glider_" .. rotate
+    local pattern = patterns[patternKey]
+    module.placePattern(x, y, pattern, sfx, offsetX, offsetY, brush)
 end
 
 function module.placeGliderGun(x, y, sfx, brush)
     local offsetX = -4
     local offsetY = -5
-    module.placePattern(x, y, patterns.gliderGun, sfx, offsetX, offsetY, brush)
+    local patternKey = "gliderGun_" .. rotate
+    local pattern = patterns[patternKey]
+    module.placePattern(x, y, pattern, sfx, offsetX, offsetY, brush)
 end
 
 function module.placeFlyingship(x, y, sfx, brush)
     local offsetX = -4
     local offsetY = -5
-    module.placePattern(x, y, patterns.flyingship_1, sfx, offsetX, offsetY, brush)
+    local patternKey = "flyingship_" .. rotate
+    local pattern = patterns[patternKey]
+    module.placePattern(x, y, pattern, sfx, offsetX, offsetY, brush)
 end
 
 function module.placePulsar(x, y, sfx, brush)
     local offsetX = -7
     local offsetY = -7
-    module.placePattern(x, y, patterns.pulsar, sfx, offsetX, offsetY, brush)
+    local patternKey = "pulsar_" .. rotate
+    local pattern = patterns[patternKey]
+    module.placePattern(x, y, pattern, sfx, offsetX, offsetY, brush)
 end
 
 function module.placeHWSS(x, y, sfx, brush)
     local offsetX = -4
     local offsetY = -3
-    module.placePattern(x, y, patterns.hwss, sfx, offsetX, offsetY, brush)
+    local patternKey = "hwss_" .. rotate
+    local pattern = patterns[patternKey]
+    module.placePattern(x, y, pattern, sfx, offsetX, offsetY, brush)
 end
 
 function module.placePulsating(x, y, sfx, brush)
     local offsetX = -4
     local offsetY = -5
-    module.placePattern(x, y, patterns.pulsating, sfx, offsetX, offsetY, brush)
+    local patternKey = "pulsating_" .. rotate
+    local pattern = patterns[patternKey]
+    module.placePattern(x, y, pattern, sfx, offsetX, offsetY, brush)
 end
 
 function module.placeSpaceship(x, y, sfx, brush)
     local offsetX = -4
     local offsetY = -5
-    module.placePattern(x, y, patterns.spaceship, sfx, offsetX, offsetY, brush)
+    local patternKey = "spaceship_" .. rotate
+    local pattern = patterns[patternKey]
+    module.placePattern(x, y, pattern, sfx, offsetX, offsetY, brush)
 end
 
 function module.placeWheelOfFire(x, y, sfx, brush)
     local offsetX = -4
     local offsetY = -5
-    module.placePattern(x, y, patterns.wheelOfFire, sfx, offsetX, offsetY, brush)
+    local patternKey = "wheelOfFire_" .. rotate
+    local pattern = patterns[patternKey]
+    module.placePattern(x, y, pattern, sfx, offsetX, offsetY, brush)
 end
 
 return module
