@@ -11,7 +11,8 @@ local colors = {
     {0.5, 0.5, 0.05}, -- Dark Yellow
     {0.4, 0.1, 0.4}, -- Dark Purple
     {0.1, 0.5, 0.5}, -- Dark Cyan
-    {0.5, 0.5, 0.5} -- Dark White (Gray)
+    {0.5, 0.5, 0.5}, -- Dark White (Gray)
+    {0.12, 0.12, 0.12} -- dark gray
 }
 
 local debug = true
