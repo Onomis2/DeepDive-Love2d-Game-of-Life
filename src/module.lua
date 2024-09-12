@@ -219,6 +219,26 @@ function module.mousepressed(x, y, button, istouch, presses, sfx, uiBool, brush)
             isRemoving = true
             removeCell(x, y, sfx)
         end
+    elseif uiBool == false and y <= 125 then
+        if x <= 100 then
+            setBrush(1)
+        elseif x > 100 and x <= 200 then
+            setBrush(2)
+        elseif x > 200 and x <= 500 then
+            setBrush(3)
+        elseif x > 500 and x <= 650 then
+            setBrush(4)
+        elseif x > 650 and x <= 750 then
+            setBrush(5)
+        elseif x > 750 and x <= 830 then
+            setBrush(6)
+        elseif x > 750 and x <= 900 then
+            setBrush(7)
+        elseif x > 900 and x <= 1030 then
+            setBrush(8)
+        elseif x > 1030 and x <= 1120 then
+            setBrush(9)
+        end
     elseif uiBool == true then
         if button == 1 then
             isPlacing = true
