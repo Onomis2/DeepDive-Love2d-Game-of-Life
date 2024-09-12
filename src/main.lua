@@ -116,13 +116,13 @@ function love.keypressed(key)
         module.playSFX(sfx, "select")
     elseif key == "1" or key == "2" or key == "3" or key == "4" or key == "5" or key == "6" or key == "7" or key == "8" or key == "9" then
         brush = tonumber(key)
-    elseif key == "up" then
-        if tickSpeed > 1 and tickSpeed <= 20 then
+    elseif key == "up" and tickSpeed < 20  then
+        if tickSpeed > 1 then
             tickSpeed = tickSpeed + 1
         else
             tickSpeed = tickSpeed * 2
         end
-    elseif key == "down" and tickSpeed >= 0.001 then
+    elseif key == "down" and tickSpeed >= 0.01 then
         if tickSpeed > 1 then
             tickSpeed = tickSpeed - 1
         else
