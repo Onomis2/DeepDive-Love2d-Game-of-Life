@@ -66,7 +66,7 @@ end
 
 function ui.draw(brush)
 
-    local mouseX, mouseY = love.mouse.getPosition()
+    --local mouseX, mouseY = love.mouse.getPosition()
     local arrow = ""
     
     if UI == false then
