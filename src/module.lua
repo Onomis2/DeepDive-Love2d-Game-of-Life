@@ -236,25 +236,25 @@ function module.mousepressed(x, y, button, istouch, presses, sfx, uiBool, brush)
             setBrush(1)
         elseif x > 100 and x <= 200 then
             setBrush(2)
-        elseif x > 200 and x <= 500 then
+        elseif x > 200 and x <= 480 then
             setBrush(3)
-        elseif x > 500 and x <= 650 then
+        elseif x > 480 and x <= 640 then
             setBrush(4)
-        elseif x > 650 and x <= 750 then
+        elseif x > 640 and x <= 740 then
             setBrush(5)
-        elseif x > 750 and x <= 830 then
+        elseif x > 740 and x <= 820 then
             setBrush(6)
-        elseif x > 750 and x <= 900 then
+        elseif x > 820 and x <= 880 then
             setBrush(7)
-        elseif x > 900 and x <= 1030 then
+        elseif x > 880 and x <= 1030 then
             setBrush(8)
         elseif x > 1030 and x <= 1120 then
             setBrush(9)
-        elseif x > 1120 and x <= 1190 and y <= 50 then
+        elseif x > 1150 and x <= 1190 and y <= 50 then
             if deathCondition < 8 then
                 deathCondition = deathCondition + 1
             end
-        elseif x > 1120 and x <= 1190 and y <= 125 and y >= 75 then
+        elseif x > 1150 and x <= 1190 and y <= 125 and y >= 75 then
             if deathCondition > 0 then
                 deathCondition = deathCondition - 1
             end
