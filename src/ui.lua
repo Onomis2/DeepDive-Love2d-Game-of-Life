@@ -114,6 +114,15 @@ function ui.draw(brush)
         love.graphics.print("8", width - 525, 90, 0, 1.4, 1.4)
         love.graphics.draw(wheelOfFire, width - 500, 20, 0, 0.23, 0.23)
         love.graphics.print("9", width - 435, 90, 0, 1.4, 1.4)
+        love.graphics.print("/\\", width - 375, 25, 0, 1.4, 1.4)
+        love.graphics.print("0", width - 375, 55, 0, 1.4, 1.4)
+        love.graphics.print("\\/", width - 375, 80, 0, 1.4, 1.4)
+        love.graphics.print("/\\", width - 325, 25, 0, 1.4, 1.4)
+        love.graphics.print("2", width - 325, 55, 0, 1.4, 1.4)
+        love.graphics.print("\\/", width - 325, 80, 0, 1.4, 1.4)
+        love.graphics.print("/\\", width - 275, 25, 0, 1.4, 1.4)
+        love.graphics.print("1", width - 275, 55, 0, 1.4, 1.4)
+        love.graphics.print("\\/", width - 275, 80, 0, 1.4, 1.4)
     end
 
 end
