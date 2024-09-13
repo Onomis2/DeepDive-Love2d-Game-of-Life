@@ -90,7 +90,7 @@ function ui.draw(brush)
         arrow = "\\/ "
     end
 
-    --love.graphics.print("MouseX: " .. tostring(mouseX) .. ",MouseY:" .. tostring(mouseY), mouseX - 15, mouseY - 15)
+    love.graphics.print("MouseX: " .. tostring(mouseX) .. ",MouseY:" .. tostring(mouseY), mouseX - 15, mouseY - 15)
     love.graphics.print(arrow .. brushText[brush], mouseX + 15, mouseY + 15)
     love.graphics.print(hide, width - 225, 35)
     if UI == false then
@@ -115,13 +115,13 @@ function ui.draw(brush)
         love.graphics.draw(wheelOfFire, width - 500, 20, 0, 0.23, 0.23)
         love.graphics.print("9", width - 435, 90, 0, 1.4, 1.4)
         love.graphics.print("/\\", width - 375, 25, 0, 1.4, 1.4)
-        love.graphics.print("0", width - 375, 55, 0, 1.4, 1.4)
+        love.graphics.print(tostring(deathCondition), width - 375, 55, 0, 1.4, 1.4)
         love.graphics.print("\\/", width - 375, 80, 0, 1.4, 1.4)
         love.graphics.print("/\\", width - 325, 25, 0, 1.4, 1.4)
-        love.graphics.print("2", width - 325, 55, 0, 1.4, 1.4)
+        love.graphics.print(tostring(liveLower), width - 325, 55, 0, 1.4, 1.4)
         love.graphics.print("\\/", width - 325, 80, 0, 1.4, 1.4)
         love.graphics.print("/\\", width - 275, 25, 0, 1.4, 1.4)
-        love.graphics.print("1", width - 275, 55, 0, 1.4, 1.4)
+        love.graphics.print(tostring(liveUpper), width - 275, 55, 0, 1.4, 1.4)
         love.graphics.print("\\/", width - 275, 80, 0, 1.4, 1.4)
     end
 

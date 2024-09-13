@@ -4,9 +4,7 @@ local patterns = require("patterns")
 local cellSize = 10
 local generation = 0
 local count = 0
-local deathCondition = 3
-local liveUpper = 3
-local liveLower = 2
+local rotate = 1
 
 local cellColor = {0, 1, 0}
 local width, height = love.window.getDesktopDimensions()
@@ -17,7 +15,6 @@ local isPlacing = false
 local isRemoving = false
 local isGridVisible = true
 local rainbow = false
-local rotate = 1
 
 local place = love.audio.newSource("sfx/place.wav", "static")
 local remove = love.audio.newSource("sfx/remove.wav", "static")
@@ -253,6 +250,30 @@ function module.mousepressed(x, y, button, istouch, presses, sfx, uiBool, brush)
             setBrush(8)
         elseif x > 1030 and x <= 1120 then
             setBrush(9)
+        elseif x > 1120 and x <= 1190 and y <= 50 then
+            if deathCondition < 8 then
+                deathCondition = deathCondition + 1
+            end
+        elseif x > 1120 and x <= 1190 and y <= 125 and y >= 75 then
+            if deathCondition > 0 then
+                deathCondition = deathCondition - 1
+            end
+        elseif x > 1190 and x <= 1245 and y <= 50 then
+            if liveLower < 8 then
+                liveLower = liveLower + 1
+            end
+        elseif x > 1190 and x <= 1245 and y <= 125 and y >= 75 then
+            if liveLower > 0 then
+                liveLower = liveLower - 1
+            end
+        elseif x > 1245 and x <= 1285 and y <= 50 then
+            if liveUpper < 8 then
+                liveUpper = liveUpper + 1
+            end
+        elseif x > 1245 and x <= 1285 and y <= 125 and y >= 75 then
+            if liveUpper > 0 then
+                liveUpper = liveUpper - 1
+            end
         end
     elseif uiBool == true then
         if button == 1 then
