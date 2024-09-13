@@ -21,6 +21,9 @@ local sfx = true
 local pauseOnPlace = false
 local showHelpMenu = true
 
+deathCondition = 3
+liveUpper = 3
+liveLower = 2
 local brush = 1
 local tickSpeed = 1
 local tickCount = 0.0

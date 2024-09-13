@@ -4,6 +4,7 @@ local patterns = require("patterns")
 local cellSize = 10
 local generation = 0
 local count = 0
+local rotate = 1
 
 local cellColor = {0, 1, 0}
 local width, height = love.window.getDesktopDimensions()
@@ -14,7 +15,6 @@ local isPlacing = false
 local isRemoving = false
 local isGridVisible = true
 local rainbow = false
-local rotate = 1
 
 local place = love.audio.newSource("sfx/place.wav", "static")
 local remove = love.audio.newSource("sfx/remove.wav", "static")
@@ -236,20 +236,44 @@ function module.mousepressed(x, y, button, istouch, presses, sfx, uiBool, brush)
             setBrush(1)
         elseif x > 100 and x <= 200 then
             setBrush(2)
-        elseif x > 200 and x <= 500 then
+        elseif x > 200 and x <= 480 then
             setBrush(3)
-        elseif x > 500 and x <= 650 then
+        elseif x > 480 and x <= 640 then
             setBrush(4)
-        elseif x > 650 and x <= 750 then
+        elseif x > 640 and x <= 740 then
             setBrush(5)
-        elseif x > 750 and x <= 830 then
+        elseif x > 740 and x <= 820 then
             setBrush(6)
-        elseif x > 750 and x <= 900 then
+        elseif x > 820 and x <= 880 then
             setBrush(7)
-        elseif x > 900 and x <= 1030 then
+        elseif x > 880 and x <= 1030 then
             setBrush(8)
         elseif x > 1030 and x <= 1120 then
             setBrush(9)
+        elseif x > 1150 and x <= 1190 and y <= 50 then
+            if deathCondition < 8 then
+                deathCondition = deathCondition + 1
+            end
+        elseif x > 1150 and x <= 1190 and y <= 125 and y >= 75 then
+            if deathCondition > 0 then
+                deathCondition = deathCondition - 1
+            end
+        elseif x > 1190 and x <= 1245 and y <= 50 then
+            if liveLower < 8 then
+                liveLower = liveLower + 1
+            end
+        elseif x > 1190 and x <= 1245 and y <= 125 and y >= 75 then
+            if liveLower > 0 then
+                liveLower = liveLower - 1
+            end
+        elseif x > 1245 and x <= 1285 and y <= 50 then
+            if liveUpper < 8 then
+                liveUpper = liveUpper + 1
+            end
+        elseif x > 1245 and x <= 1285 and y <= 125 and y >= 75 then
+            if liveUpper > 0 then
+                liveUpper = liveUpper - 1
+            end
         end
     elseif uiBool == true then
         if button == 1 then
@@ -337,9 +361,9 @@ function module.updateCells()
                     end
 
                     if cell[nx] and cell[nx][ny] == 1 then
-                        newCells[nx][ny] = (population == 2 or population == 3) and 1 or 0
+                        newCells[nx][ny] = (population >= liveLower and population <= liveUpper) and 1 or 0
                     else
-                        newCells[nx][ny] = (population == 3) and 1 or 0
+                        newCells[nx][ny] = (population == deathCondition) and 1 or 0
                     end
                 end
             end
