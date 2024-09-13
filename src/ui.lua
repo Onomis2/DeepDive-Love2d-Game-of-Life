@@ -66,7 +66,7 @@ end
 
 function ui.draw(brush)
 
-    --local mouseX, mouseY = love.mouse.getPosition()
+    local mouseX, mouseY = love.mouse.getPosition()
     local arrow = ""
     
     if UI == false then
@@ -90,7 +90,7 @@ function ui.draw(brush)
         arrow = "\\/ "
     end
 
-    love.graphics.print("MouseX: " .. tostring(mouseX) .. ",MouseY:" .. tostring(mouseY), mouseX - 15, mouseY - 15)
+    --love.graphics.print("MouseX: " .. tostring(mouseX) .. ",MouseY:" .. tostring(mouseY), mouseX - 15, mouseY - 15)
     love.graphics.print(arrow .. brushText[brush], mouseX + 15, mouseY + 15)
     love.graphics.print(hide, width - 225, 35)
     if UI == false then
