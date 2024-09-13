@@ -8,7 +8,7 @@ This project is our group's remake of John Conway's Game of Life. We chose to us
 
 ### Download Instructions
 
-1. Visit the [Releases](https://github.com/your-repo/releases) section of the repository.
+1. Visit the [Releases](https://github.com/Onomis2/DeepDive-Love2d-Game-of-Life/releases) section of the repository.
 2. Download the latest release for your operating system.
 
 ### Features
