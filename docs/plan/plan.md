@@ -1,4 +1,5 @@
 Wij hebben ervoor gekozen om met love2d te gaan werken.
+Ons doel is om een leuke demo van Game of life te maken in love2d.
 We gaan het maken met een grid systeem en dan een UI waarmee je deeltjes kan selecteren en op pauze kan zetten.
 
 
